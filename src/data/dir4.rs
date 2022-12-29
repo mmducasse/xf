@@ -28,12 +28,7 @@ impl Dir4 {
     }
 
     pub fn opposite(&self) -> Self {
-        match self {
-            N => S,
-            E => W,
-            S => N,
-            W => E,
-        }
+        Self::from(*self as i32 + 2)
     }
 
     pub fn rotate(self, dir: Spin) -> Self {
@@ -48,45 +43,18 @@ impl Dir4 {
     }
 
     pub fn is_vertical(&self) -> bool {
-        match self {
-            N | S => true,
-            _ => false,
-        }
+        matches!(self, N | S)
     }
 
     pub fn is_horizontal(&self) -> bool {
-        match self {
-            W | E => true,
-            _ => false,
-        }
+        matches!(self, W | E)
     }
 
     pub fn cw(&self, turns: i32) -> Self {
-        let mut i = self.to_i32();
+        let mut i = *self as i32;
         i += turns;
 
-        Self::from_i32(i)
-    }
-
-    pub fn to_i32(&self) -> i32 {
-        use Dir4::*;
-        match *self {
-            N => 0,
-            E => 1,
-            S => 2,
-            W => 3,
-        }
-    }
-
-    pub fn from_i32(i: i32) -> Self {
-        use Dir4::*;
-        match i % 4 {
-            0 => N,
-            1 => E,
-            2 => S,
-            3 => W,
-            _ => panic!(),
-        }
+        Self::from(i)
     }
 
     pub fn from_ivec2(ivec2: IVec2) -> Option<Dir4> {
@@ -98,6 +66,18 @@ impl Dir4 {
             Some(if ivec2.y < 0 { N } else { S })
         } else {
             Some(if ivec2.x < 0 { W } else { E })
+        }
+    }
+}
+
+impl From<i32> for Dir4 {
+    fn from(i: i32) -> Self {
+        use Dir4::*;
+        match mod_(i, 4) {
+            1 => E,
+            2 => S,
+            3 => W,
+            _ => N,
         }
     }
 }
