@@ -44,13 +44,19 @@ impl<T> Arr2D<T> {
         }
     }
 
-    pub fn set(&mut self, pt: IVec2, value: T) {
-        let idx = self.to_idx(pt);
-        self.set_i(idx, value);
+    pub fn set(&mut self, pt: IVec2, value: T) -> bool {
+        if self.bounds().contains(pt) {
+            let idx = self.to_idx(pt);
+            self.data[idx] = value;
+            true
+        } else { false }
     }
 
-    pub fn set_i(&mut self, idx: usize, value: T) {
-        self.data[idx] = value;
+    pub fn set_i(&mut self, idx: usize, value: T) -> bool {
+        if idx < self.data.len() {
+            self.data[idx] = value;
+            true
+        } else { false }
     }
 
     pub fn size(&self) -> IVec2 {
@@ -116,6 +122,17 @@ impl<T: Copy> Arr2D<T> {
         }
 
         copy
+    }
+
+    pub fn copy_from(&mut self, other: &Arr2D<T>, src: IRect, dst: IVec2) {
+        for src_pt in src.iter() {
+            let offset = src_pt - src.pos;
+            let dst_pt = dst + offset;
+
+            if let Some(color) = other.get(src_pt) {
+                self.set(dst_pt, *color);
+            }
+        }
     }
 
     pub fn set_area(&mut self, origin: IVec2, other: Arr2D<T>) {

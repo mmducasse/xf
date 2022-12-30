@@ -1,16 +1,34 @@
 
 
 num
-  frac
-  ivec2
-  fvec2
-  irect
-  limit
+  +frac
+  +vec2
+  +ivec2
+  +fvec2
+  +irect
+  +limit
 
-anim
-draw
+gl
+  anim
+  draw
+  texture
+  
+ui
+  font
+  text
+
 util
   timer
+
 data
-  arr2d
-  dir4
+  +arr2d
+  +dir4
+  +spin
+
+map
+  tileset_json
+  tileset
+  tilemap_json
+  tilemap
+
+audio
