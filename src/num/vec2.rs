@@ -1,6 +1,6 @@
 use std::{ops::{Add, Sub, Mul}, fmt::Debug};
 
-
+/// 2D vector.
 pub struct Vec2<T> {
     pub x: T,
     pub y: T,
@@ -16,7 +16,7 @@ pub struct Vec2<T> {
 
 impl<T> Vec2<T>
 where T: Copy {
-    pub fn splat(m: T) -> Self {
+    pub const fn splat(m: T) -> Self {
         Self { x: m, y: m }
     }
 }
