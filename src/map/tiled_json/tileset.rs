@@ -31,3 +31,11 @@ pub struct JsonTileset {
     pub tilewidth: i32,
     pub tiles: Vec<JsonTile>,
 }
+
+impl JsonTileset {
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self, String> {
+        serde_json::from_slice(bytes).or_else(|e| {
+            Err(e.to_string())
+        })
+    }
+}

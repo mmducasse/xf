@@ -43,3 +43,11 @@ pub struct JsonTilemap {
     pub tilesets: Vec<Tileset>,
     pub layers: Vec<Layer>,
 }
+
+impl JsonTilemap {
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self, String> {
+        serde_json::from_slice(bytes).or_else(|e| {
+            Err(e.to_string())
+        })
+    }
+}

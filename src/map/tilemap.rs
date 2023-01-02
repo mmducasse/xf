@@ -1,12 +1,14 @@
 
-use crate::{num::ivec2::IVec2, data::arr2d::Arr2D};
+use std::rc::Rc;
 
-use super::tileset::Tileset;
+use crate::{num::ivec2::{IVec2, i2}, data::arr2d::Arr2D};
+
+use super::{tileset::Tileset, tiled_json::tilemap::{JsonTilemap, Layer}};
 
 pub struct Tilemap<Tile>
 {
     pub tile_srcs: Arr2D<IVec2>,
-    pub tileset: Tileset<Tile>,
+    pub tileset: Rc<Tileset<Tile>>,
 }
 
 impl<Tile> Tilemap<Tile>
@@ -28,5 +30,34 @@ where Tile: Clone
             tile_srcs: self.tile_srcs.clone(), 
             tileset: self.tileset.clone() 
         }
+    }
+}
+
+impl<Tile> Tilemap<Tile>
+{
+    /// Converts the Tilelayers of a `JsonTileset` object into a Vec of `Tilemap`.
+    pub fn from_json<F>(json: &JsonTilemap, tileset: Rc<Tileset<Tile>>) 
+        -> Result<Vec<Self>, String>
+    {
+        let size = i2(json.width, json.height);
+        let mut tilemaps = vec![];
+
+        for layer in &json.layers {
+            if let Layer::Tilelayer { data, ..} = layer {
+                let tile_srcs: Vec<IVec2> = data.iter().map(|id|{
+                    let id = *id as i32;
+                    i2(id % size.y, id / size.y)
+                }).collect();
+
+                let tile_srcs = Arr2D::new(tile_srcs, size.x as usize);
+
+                tilemaps.push(Tilemap {
+                    tile_srcs,
+                    tileset: tileset.clone(),
+                });
+            }
+        }
+
+        Ok(tilemaps)
     }
 }
