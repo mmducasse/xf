@@ -43,17 +43,3 @@ pub struct JsonTilemap {
     pub tilesets: Vec<Tileset>,
     pub layers: Vec<Layer>,
 }
-
-impl JsonTilemap {
-    // pub fn load(bytes: &[u8]) -> Result<JsonTilemap, String> {
-    //     let content = String::from_utf8(bytes.to_vec()).or_else(|e| {
-    //         Err(e.to_string())
-    //     })?;
-        
-    //     let json: JsonTilemap = serde_json::from_str(content.as_str()).or_else(|e| {
-    //         Err(e.to_string())
-    //     })?;
-
-    //     Ok(json)
-    // }
-}

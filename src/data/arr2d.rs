@@ -1,25 +1,21 @@
 use std::ops::{Index, IndexMut};
 
-use crate::num::{ivec2::{IVec2, i2}, irect::{IRect, ir}};
+use crate::num::{ivec2::{IVec2, i2}, irect::IRect};
 
 
 pub struct Arr2D<T> {
     data: Vec<T>,
-    size: IVec2,
+    width: usize,
 }
 
 impl<T> Arr2D<T> {
-    pub fn new(data: Vec<T>, size: IVec2) -> Self {
-        assert!((data.len() as i32) == (size.x * size.y));
-
-        Self {
-            data,
-            size,
-        }
+    pub fn new(data: Vec<T>, width: usize) -> Self {
+        assert!(width > 0);
+        Self { data, width }
     }
 
-    pub fn get(&self, pt: IVec2) -> Option<&T> {
-        let i = self.to_idx(pt);
+    pub fn get(&self, pos: IVec2) -> Option<&T> {
+        let i = self.to_idx(pos);
         self.get_i(i)
     }
 
@@ -60,7 +56,10 @@ impl<T> Arr2D<T> {
     }
 
     pub fn size(&self) -> IVec2 {
-        self.size
+        let last_idx = self.count().max(1) - 1;
+        let height = self.to_pt(last_idx).y + 1;
+
+        i2(self.width as i32, height as i32)
     }
 
     pub fn count(&self) -> usize {
@@ -68,7 +67,7 @@ impl<T> Arr2D<T> {
     }
 
     pub fn bounds(&self) -> IRect {
-        ir(IVec2::splat(0), self.size())
+        IRect::of_size(self.size())
     }
 
     pub fn data(&self) -> &Vec<T> {
@@ -87,12 +86,15 @@ impl<T> Arr2D<T> {
     }
 
     pub fn to_pt(&self, i: usize) -> IVec2 {
-        let i = i as i32;
-        i2(i % self.size.x, i / self.size.x)
+        let x = (i % self.width) as i32;
+        let y = (i / self.width) as i32;
+        i2(x, y)
     }
 
     pub fn to_idx(&self, pt: IVec2) -> usize {
-        (pt.x + pt.y * self.size.x) as usize
+        let x = pt.x as usize;
+        let y = pt.y as usize;
+        y * self.width + x
     }
 
     pub fn iter(&self) -> Arr2DIter<'_, T> {
@@ -103,11 +105,7 @@ impl<T> Arr2D<T> {
 impl<T: Clone> Arr2D<T> {
     pub fn default(default_value: T, size: IVec2) -> Self {
         let data = vec![default_value; size.product() as usize];
-        
-        Self {
-            data,
-            size,
-        }
+        Self::new(data, size.x as usize)
     }
 }
 
@@ -170,14 +168,14 @@ impl<T> Index<IVec2> for Arr2D<T> {
         if let Some(value) = self.get(index) {
             value
         } else {
-            panic!("Attempted to access index {:?} in Arr2D of size {:?}", index, self.size);
+            panic!("Attempted to access index {:?} in Arr2D of size {:?}", index, self.size());
         }
     }
 }
 
 impl<T> IndexMut<IVec2> for Arr2D<T> {
     fn index_mut(&mut self, index: IVec2) -> &mut Self::Output {
-        let size = self.size;
+        let size = self.size();
         if let Some(value) = self.get_mut(index) {
             value
         } else {
@@ -192,7 +190,7 @@ impl<T> Clone for Arr2D<T>
     fn clone(&self) -> Self {
         Self {
             data: self.data.clone(),
-            size: self.size.clone(),
+            width: self.width,
         }
     }
 }
