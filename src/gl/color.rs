@@ -12,6 +12,15 @@ impl Color {
         Self { r, g, b, a }
     }
 
-    pub const BLACK: Color = Color::new(0, 0, 0, 255);
-    pub const WHITE: Color = Color::new(255, 255, 255, 255);
+    pub const fn rgba(rgba: u32) -> Self {
+        Self { 
+            r: ((rgba >> 24) & 0xFF) as u8, 
+            g: ((rgba >> 16) & 0xFF) as u8, 
+            b: ((rgba >> 08) & 0xFF) as u8, 
+            a: ((rgba >> 00) & 0xFF) as u8 
+        }
+    }
+
+    pub const BLACK: Color = Color::rgba(0x0000_00FF);
+    pub const WHITE: Color = Color::rgba(0xFFFF_FFFF);
 }
