@@ -2,4 +2,6 @@
 pub mod tileset;
 pub mod tilemap;
 
-mod json;
+pub mod load;
+
+mod tiled_json;

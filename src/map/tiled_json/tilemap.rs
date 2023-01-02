@@ -45,17 +45,15 @@ pub struct JsonTilemap {
 }
 
 impl JsonTilemap {
-    // pub fn load(bytes: &[u8]) -> JsonTilemap {
-    //     let contents = String::from_utf8(bytes.to_vec()).unwrap_or_else(|e| {
-    //         println!("{}", e.to_string());
-    //         panic!();
-    //     });
+    // pub fn load(bytes: &[u8]) -> Result<JsonTilemap, String> {
+    //     let content = String::from_utf8(bytes.to_vec()).or_else(|e| {
+    //         Err(e.to_string())
+    //     })?;
         
-    //     let result: JsonTilemap = serde_json::from_str(contents.as_str()).unwrap_or_else(|e| {
-    //         println!("{}", e.to_string());
-    //         panic!();
-    //     });
+    //     let json: JsonTilemap = serde_json::from_str(content.as_str()).or_else(|e| {
+    //         Err(e.to_string())
+    //     })?;
 
-    //     result
+    //     Ok(json)
     // }
 }
