@@ -1,5 +1,4 @@
 
 pub mod tileset;
 pub mod tilemap;
-
-mod tiled_json;
+pub mod tiled_json;
