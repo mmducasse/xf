@@ -36,7 +36,7 @@ where Tile: Clone
 impl<Tile> Tilemap<Tile>
 {
     /// Converts the Tilelayers of a `JsonTileset` object into a Vec of `Tilemap`.
-    pub fn from_json<F>(json: &JsonTilemap, tileset: Rc<Tileset<Tile>>) 
+    pub fn from_json(json: &JsonTilemap, tileset: Rc<Tileset<Tile>>) 
         -> Result<Vec<Self>, String>
     {
         let size = i2(json.width, json.height);
