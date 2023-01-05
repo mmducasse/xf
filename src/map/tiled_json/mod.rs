@@ -1,3 +1,3 @@
 
-pub(super) mod tileset;
-pub(super) mod tilemap;
+pub mod tileset;
+pub mod tilemap;
