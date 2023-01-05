@@ -40,9 +40,9 @@ impl<T> Arr2D<T> {
         }
     }
 
-    pub fn set(&mut self, pt: IVec2, value: T) -> bool {
-        if self.bounds().contains(pt) {
-            let idx = self.to_idx(pt);
+    pub fn set(&mut self, pos: IVec2, value: T) -> bool {
+        if self.bounds().contains(pos) {
+            let idx = self.to_idx(pos);
             self.data[idx] = value;
             true
         } else { false }
