@@ -44,10 +44,11 @@ impl<Tile> Tilemap<Tile>
 
         for layer in &json.layers {
             if let Layer::Tilelayer { data, ..} = layer {
+                let tileset_cols= tileset.tiles.size().x;
                 let tile_srcs: Vec<Option<IVec2>> = data.iter().map(|&id|{
                     if id == 0 { None } else {
                         let id = (id - 1) as i32;
-                        Some(i2(id % size.y, id / size.y))
+                        Some(i2(id % tileset_cols, id / tileset_cols))
                     }
                 }).collect();
 
