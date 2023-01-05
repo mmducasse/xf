@@ -1,7 +1,7 @@
 
 use crate::{
     num::{ivec2::IVec2, irect::ir}, 
-    gl::{texture::Texture, draw::draw_texture}, 
+    gl::{texture::Texture, bitmap::Bitmap}, 
     time::time::delta_s
 };
 
@@ -67,11 +67,11 @@ where T: Copy + PartialEq
         self.completion() >= 1.0
     }
     
-    pub fn draw(&self, texture: &Texture, origin: IVec2) {
+    pub fn draw(&self, texture: &Texture, origin: IVec2, target: &mut dyn Bitmap) {
         let frame = self.curr_animation().at(self.curr_time_s);
         let src = ir(frame.src_loc * self.sprite_size, self.sprite_size);
         let dst = origin + frame.draw_offset;
 
-        draw_texture(&texture, src, dst);
+        target.draw_texture(&texture, src, dst);
     }
 }
