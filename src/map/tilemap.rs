@@ -7,7 +7,7 @@ use super::{tileset::Tileset, tiled_json::tilemap::{JsonTilemap, Layer}};
 
 pub struct Tilemap<Tile>
 {
-    pub tile_srcs: Arr2D<IVec2>,
+    pub tile_srcs: Arr2D<Option<IVec2>>,
     pub tileset: Rc<Tileset<Tile>>,
 }
 
@@ -17,8 +17,8 @@ where Tile: Clone
     pub fn size(&self) -> IVec2 { self.tile_srcs.size() }
 
     pub fn get(&self, pos: IVec2) -> Option<&Tile> {
-        let src_pos = self.tile_srcs.get(pos)?;
-        self.tileset.tiles.get(*src_pos)
+        let src_pos = (*self.tile_srcs.get(pos)?)?;
+        self.tileset.tiles.get(src_pos)
     }
 }
 
@@ -44,9 +44,11 @@ impl<Tile> Tilemap<Tile>
 
         for layer in &json.layers {
             if let Layer::Tilelayer { data, ..} = layer {
-                let tile_srcs: Vec<IVec2> = data.iter().map(|id|{
-                    let id = *id as i32;
-                    i2(id % size.y, id / size.y)
+                let tile_srcs: Vec<Option<IVec2>> = data.iter().map(|&id|{
+                    if id == 0 { None } else {
+                        let id = (id - 1) as i32;
+                        Some(i2(id % size.y, id / size.y))
+                    }
                 }).collect();
 
                 let tile_srcs = Arr2D::new(tile_srcs, size.x as usize);
