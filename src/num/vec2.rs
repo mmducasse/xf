@@ -1,4 +1,4 @@
-use std::{ops::{Add, Sub, Mul}, fmt::Debug};
+use std::{ops::{Add, Sub, Mul, AddAssign, SubAssign, MulAssign}, fmt::Debug};
 
 /// 2D vector.
 pub struct Vec2<T> {
@@ -116,5 +116,29 @@ where T: Copy + Mul<T, Output = T> {
             x: self.x * rhs,
             y: self.y * rhs,
         }
+    }
+}
+
+impl<T> AddAssign<Vec2<T>> for Vec2<T>
+where T: Copy + AddAssign<T> {
+    fn add_assign(&mut self, rhs: Vec2<T>) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
+impl<T> SubAssign<Vec2<T>> for Vec2<T>
+where T: Copy + SubAssign<T> {
+    fn sub_assign(&mut self, rhs: Vec2<T>) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+    }
+}
+
+impl<T> MulAssign<Vec2<T>> for Vec2<T>
+where T: Copy + MulAssign<T> {
+    fn mul_assign(&mut self, rhs: Vec2<T>) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
     }
 }

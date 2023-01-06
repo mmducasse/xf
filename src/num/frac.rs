@@ -48,6 +48,14 @@ impl<const DEN: i32> Into<f32> for Frac<DEN> {
     }
 }
 
+impl<const DEN: i32> From<i32> for Frac<DEN> {
+    fn from(i: i32) -> Self {
+        Frac {
+            num: i * DEN,
+        }
+    }
+}
+
 impl<const DEN: i32> From<f32> for Frac<DEN> {
     fn from(f: f32) -> Self {
         Frac {

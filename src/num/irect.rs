@@ -1,7 +1,7 @@
 
 use super::ivec2::{IVec2, i2};
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub struct IRect {
     pub pos: IVec2,
     pub size: IVec2,
