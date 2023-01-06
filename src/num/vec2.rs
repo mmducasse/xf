@@ -1,4 +1,11 @@
-use std::{ops::{Add, Sub, Mul, AddAssign, SubAssign, MulAssign}, fmt::Debug};
+use std::{
+    ops::{
+        Add, Sub, Mul, Div,
+        AddAssign, SubAssign, MulAssign, 
+        Neg
+    }, 
+    fmt::Debug
+};
 
 /// 2D vector.
 pub struct Vec2<T> {
@@ -71,12 +78,24 @@ where T: Eq {
     fn assert_receiver_is_total_eq(&self) {}
 }
 
+impl<T> Neg for Vec2<T>
+where T: Copy + Neg<Output = T> {
+    type Output = Vec2<T>;
+
+    fn neg(self) -> Self::Output {
+        Self {
+            x: -self.x,
+            y: -self.y,
+        }
+    }
+}
+
 impl<T> Add<Vec2<T>> for Vec2<T>
 where T: Copy + Add<T, Output = T> {
     type Output = Vec2<T>;
 
     fn add(self, rhs: Vec2<T>) -> Self::Output {
-        Vec2 {
+        Self {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
         }
@@ -88,7 +107,7 @@ where T: Copy + Sub<T, Output = T> {
     type Output = Vec2<T>;
 
     fn sub(self, rhs: Vec2<T>) -> Self::Output {
-        Vec2 {
+        Self {
             x: self.x - rhs.x,
             y: self.y - rhs.y,
         }
@@ -100,7 +119,7 @@ where T: Copy + Mul<T, Output = T> {
     type Output = Vec2<T>;
 
     fn mul(self, rhs: Vec2<T>) -> Self::Output {
-        Vec2 {
+        Self {
             x: self.x * rhs.x,
             y: self.y * rhs.y,
         }
@@ -112,9 +131,21 @@ where T: Copy + Mul<T, Output = T> {
     type Output = Vec2<T>;
 
     fn mul(self, rhs: T) -> Self::Output {
-        Vec2 {
+        Self {
             x: self.x * rhs,
             y: self.y * rhs,
+        }
+    }
+}
+
+impl<T> Div<T> for Vec2<T>
+where T: Copy + Div<T, Output = T> {
+    type Output = Vec2<T>;
+
+    fn div(self, rhs: T) -> Self::Output {
+        Self {
+            x: self.x / rhs,
+            y: self.y / rhs,
         }
     }
 }

@@ -23,6 +23,13 @@ impl IRect {
         Self { pos: IVec2::ZERO, size }
     }
 
+    /// Creates a rectangle centered around `center`
+    /// with the given size.
+    pub fn centered_at(center: IVec2, size: IVec2) -> Self {
+        let pos = center - (size / 2);
+        Self { pos, size }
+    }
+
     /// The rectangle's x position (top-left origin).
     #[inline]
     pub fn x(&self) -> i32 { self.pos.x }
@@ -54,6 +61,12 @@ impl IRect {
     /// The rectangle's right-column x position.
     #[inline]
     pub fn right(&self) -> i32 { self.x() + self.w() - 1 }
+
+    /// The rectangle's center point.
+    #[inline]
+    pub fn center(&self) -> IVec2 {
+        self.pos + (self.size / 2)
+    }
 
     /// Does the rectangle contain the point `pt`?
     pub fn contains(&self, pt: IVec2) -> bool {
@@ -93,6 +106,31 @@ impl IRect {
         let bottom = self.bottom().max(other.bottom());
 
         rect(left, top, right + 1 - left, bottom + 1 - top)
+    }
+
+    /// Adjusts this rectangle's positioin to keep it
+    /// inside `other`, if possible.
+    pub fn keep_inside(&self, other: IRect) -> Self {
+        if self.w() > other.w() || self.h() > other.h() {
+            // Can't keep inside, it's bigger than otter.
+            Self::centered_at(other.center(), self.size)
+        } else {
+            let mut new = *self;
+
+            if new.left() < other.left() {
+                new.pos.x = other.left();
+            } else if new.right() > other.right() {
+                new.pos.x = other.right() - new.w();
+            }
+
+            if new.top() < other.top() {
+                new.pos.y = other.top();
+            } else if new.bottom() > other.bottom() {
+                new.pos.y = other.bottom() - new.h();
+            }
+
+            new
+        }
     }
 
     pub fn iter<'a>(&'a self) -> IRectIter<'a> {
