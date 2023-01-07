@@ -15,6 +15,7 @@ impl<T> Arr2D<T> {
     }
 
     pub fn get(&self, pos: IVec2) -> Option<&T> {
+        if pos.x < 0 || pos.y < 0 { return None }
         let i = self.to_idx(pos);
         self.get_i(i)
     }

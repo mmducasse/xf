@@ -108,6 +108,18 @@ impl IRect {
         rect(left, top, right + 1 - left, bottom + 1 - top)
     }
 
+    /// Returns the rectangle expanded by a given amount.
+    pub fn expand(&self, x: i32) -> IRect {
+        let mut size = self.size + i2(2 * x, 2 * x);
+        size.x = size.x.max(0);
+        size.y = size.y.max(0);
+
+        Self {
+            pos: self.pos - i2(x, x),
+            size,
+        }
+    }
+
     /// Adjusts this rectangle's positioin to keep it
     /// inside `other`, if possible.
     pub fn keep_inside(&self, other: IRect) -> Self {
@@ -120,13 +132,13 @@ impl IRect {
             if new.left() < other.left() {
                 new.pos.x = other.left();
             } else if new.right() > other.right() {
-                new.pos.x = other.right() - new.w();
+                new.pos.x = other.right() - new.w() + 1;
             }
 
             if new.top() < other.top() {
                 new.pos.y = other.top();
             } else if new.bottom() > other.bottom() {
-                new.pos.y = other.bottom() - new.h();
+                new.pos.y = other.bottom() - new.h() + 1;
             }
 
             new

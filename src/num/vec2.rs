@@ -138,6 +138,18 @@ where T: Copy + Mul<T, Output = T> {
     }
 }
 
+impl<T> Div<Vec2<T>> for Vec2<T>
+where T: Copy + Div<T, Output = T> {
+    type Output = Vec2<T>;
+
+    fn div(self, rhs: Vec2<T>) -> Self::Output {
+        Self {
+            x: self.x / rhs.x,
+            y: self.y / rhs.y,
+        }
+    }
+}
+
 impl<T> Div<T> for Vec2<T>
 where T: Copy + Div<T, Output = T> {
     type Output = Vec2<T>;
