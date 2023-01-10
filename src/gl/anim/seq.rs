@@ -7,7 +7,7 @@ use super::{Animation, Frame};
 pub struct Seq<const LEN: usize> {
     pub src_locs: [IVec2; LEN],
     pub draw_offsets: [IVec2; LEN],
-    pub frame_dur: f32,
+    pub frame_dur: u32,
     pub loops: bool,
 }
 
@@ -20,11 +20,11 @@ impl<const LEN: usize> Seq<LEN> {
 
 impl<const LEN: usize> Animation for Seq<LEN> {
     fn len(&self) -> usize { self.src_locs.len() }
-    fn frame_dur_s(&self) -> f32 { self.frame_dur }
+    fn frame_dur(&self) -> u32 { self.frame_dur }
     fn loops(&self) -> bool { self.loops }
 
-    fn at(&self, time_s: f32) -> Frame {
-        let idx = (time_s / self.frame_dur) as usize;
+    fn at(&self, time: u32) -> Frame {
+        let idx = (time / self.frame_dur) as usize;
         let idx = if self.loops {
             idx % LEN
         } else {
@@ -39,7 +39,7 @@ impl<const LEN: usize> Animation for Seq<LEN> {
 }
 
 pub const fn seq<const LEN: usize>(
-    frame_dur: f32, 
+    frame_dur: u32, 
     pts: [IVec2; LEN],
     loops: bool,
 ) -> Seq<LEN>
@@ -53,7 +53,7 @@ pub const fn seq<const LEN: usize>(
 }
 
 pub const fn seq_row<const LEN: usize>(
-    frame_dur: f32, 
+    frame_dur: u32, 
     origin: IVec2,
     loops: bool,
 ) -> Seq<LEN>

@@ -2,6 +2,6 @@
 + Tileset loader
 + last row of Arr2D doesn't need to be complete.
 + Draw effects (compute shaders)
-- draw params
++ draw params
 - rotate sprites
-- Make animations frame based
++ Make animations frame based
