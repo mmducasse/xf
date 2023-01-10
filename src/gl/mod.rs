@@ -4,6 +4,5 @@ pub mod bitmap;
 pub mod texture;
 pub mod shader;
 pub mod shader_effects;
-pub mod draw;
 pub mod draw_params;
 pub mod anim;

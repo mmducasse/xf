@@ -1,8 +1,7 @@
 
 use crate::{
     num::{ivec2::IVec2, irect::ir}, 
-    gl::{texture::Texture, bitmap::Bitmap}, 
-    time::time::delta_s
+    gl::{texture::Texture, bitmap::Bitmap},
 };
 
 use super::{Animation, Frame};
@@ -36,8 +35,8 @@ where T: Copy + PartialEq
         }
     }
 
-    pub fn update(&mut self) {
-        self.curr_time_s += delta_s();
+    pub fn update(&mut self, delta_s: f32) {
+        self.curr_time_s += delta_s;
     }
 
     pub fn set_key(&mut self, key: T, reset: bool) {

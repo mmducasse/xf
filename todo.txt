@@ -4,3 +4,4 @@
 + Draw effects (compute shaders)
 - draw params
 - rotate sprites
+- Make animations frame based
