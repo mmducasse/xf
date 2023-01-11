@@ -1,4 +1,3 @@
-use std::ops::{Index, IndexMut};
 
 use crate::num::{ivec2::{IVec2, i2}, irect::IRect};
 
@@ -20,8 +19,8 @@ impl<T> Arr2D<T> {
         self.get_i(i)
     }
 
-    pub fn get_mut(&mut self, pt: IVec2) -> Option<&mut T> {
-        let i = self.to_idx(pt);
+    pub fn get_mut(&mut self, pos: IVec2) -> Option<&mut T> {
+        let i = self.to_idx(pos);
         self.get_i_mut(i)
     }
 
@@ -58,7 +57,7 @@ impl<T> Arr2D<T> {
 
     pub fn size(&self) -> IVec2 {
         let last_idx = self.count().max(1) - 1;
-        let height = self.to_pt(last_idx).y + 1;
+        let height = self.to_pos(last_idx).y + 1;
 
         i2(self.width as i32, height as i32)
     }
@@ -79,27 +78,27 @@ impl<T> Arr2D<T> {
         &mut self.data
     }
 
-    pub fn swap(&mut self, p1: IVec2, p2: IVec2) {
-        let i1 = self.to_idx(p1);
-        let i2 = self.to_idx(p2);
+    pub fn swap(&mut self, pos_1: IVec2, pos_2: IVec2) {
+        let idx_1 = self.to_idx(pos_1);
+        let idx_2 = self.to_idx(pos_2);
 
-        self.data.swap(i1, i2);
+        self.data.swap(idx_1, idx_2);
     }
 
-    pub fn to_pt(&self, i: usize) -> IVec2 {
-        let x = (i % self.width) as i32;
-        let y = (i / self.width) as i32;
+    pub fn to_pos(&self, idx: usize) -> IVec2 {
+        let x = (idx % self.width) as i32;
+        let y = (idx / self.width) as i32;
         i2(x, y)
     }
 
-    pub fn to_idx(&self, pt: IVec2) -> usize {
-        let x = pt.x as usize;
-        let y = pt.y as usize;
+    pub fn to_idx(&self, pos: IVec2) -> usize {
+        let x = pos.x as usize;
+        let y = pos.y as usize;
         y * self.width + x
     }
 
     pub fn iter(&self) -> Arr2DIter<'_, T> {
-        Arr2DIter { arr2d: self, curr_pt: i2(0, 0) }
+        Arr2DIter { arr2d: self, curr_pos: i2(0, 0) }
     }
 }
 
@@ -112,76 +111,56 @@ impl<T: Clone> Arr2D<T> {
 
 impl<T: Copy> Arr2D<T> {
     pub fn copy_area(&self, area: IRect) -> Arr2D<T> {
-        let mut copy = Arr2D::default(self[area.pos], area.size);
-
-        for dst_pt in copy.bounds().iter() {
-            let src_pt = area.pos + dst_pt;
-            let value = self[src_pt];
-            copy[dst_pt] = value;
+        if let Some(area) = self.bounds().intersection(area) {
+            let default = *self.get(area.pos).unwrap();
+            let mut copy = Arr2D::default(default, area.size);
+            for dst_pos in copy.bounds().iter() {
+                let src_pos = area.pos + dst_pos;
+                let value = *self.get(src_pos).unwrap();
+                copy.set(dst_pos, value);
+            }
+    
+            copy
+        } else {
+            Self::new(vec![], 0)
         }
-
-        copy
     }
 
-    pub fn copy_from(&mut self, other: &Arr2D<T>, src: IRect, dst: IVec2) {
-        for src_pt in src.iter() {
-            let offset = src_pt - src.pos;
-            let dst_pt = dst + offset;
+    pub fn copy_from(&mut self, other: &Arr2D<T>, src: IRect, dst_pos: IVec2) {
+        for src_pos in src.iter() {
+            let offset = src_pos - src.pos;
+            let dst_pos = dst_pos + offset;
 
-            if let Some(color) = other.get(src_pt) {
-                self.set(dst_pt, *color);
+            if let Some(value) = other.get(src_pos) {
+                self.set(dst_pos, *value);
             }
         }
     }
 
     pub fn set_area(&mut self, origin: IVec2, other: Arr2D<T>) {
-        for src_pt in other.bounds().iter() {
-            let dst_pt = src_pt + origin;
-            if self.bounds().contains(dst_pt) {
-                self[dst_pt] = other[src_pt];
-            }
+        for src_pos in other.bounds().iter() {
+            let value = other.get(src_pos).unwrap();
+            let dst_pos = src_pos + origin;
+            self.set(dst_pos, *value);
         }
     }
 }
 
 pub struct Arr2DIter<'a, T> {
     arr2d: &'a Arr2D<T>,
-    curr_pt: IVec2,
+    curr_pos: IVec2,
 }
 
 impl<'a, T> Iterator for Arr2DIter<'a, T> {
     type Item = &'a T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let curr_pt = self.curr_pt;
-        let idx = self.arr2d.to_idx(curr_pt);
+        let curr_pos = self.curr_pos;
+        let idx = self.arr2d.to_idx(curr_pos);
 
-        self.curr_pt = self.arr2d.to_pt(idx + 1);
+        self.curr_pos = self.arr2d.to_pos(idx + 1);
 
         self.arr2d.get_i(idx)
-    }
-}
-
-impl<T> Index<IVec2> for Arr2D<T> {
-    type Output = T;
-
-    fn index(&self, index: IVec2) -> &Self::Output {
-        if let Some(value) = self.get(index) {
-            value
-        } else {
-            panic!("Attempted to access index {:?} in Arr2D of size {:?}", index, self.size());
-        }
-    }
-}
-
-impl<T> IndexMut<IVec2> for Arr2D<T> {
-    fn index_mut(&mut self, index: IVec2) -> &mut Self::Output {
-        let size = self.size();
-        if let Some(value) = self.get_mut(index) {
-            value
-        } else {
-            panic!("Attempted to access index {:?} in Arr2D of size {:?}", index, size);
-        }
     }
 }
 

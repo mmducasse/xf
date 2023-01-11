@@ -19,4 +19,18 @@ impl IVec2 {
             y: self.y as f32,
         }
     }
+
+    pub const fn add(a: IVec2, b: IVec2) -> IVec2 {
+        IVec2 {
+            x: a.x + b.x,
+            y: a.y + b.y,
+        }
+    }
+
+    pub const fn mul(a: IVec2, b: IVec2) -> IVec2 {
+        IVec2 {
+            x: a.x * b.x,
+            y: a.y * b.y,
+        }
+    }
 }
