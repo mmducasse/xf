@@ -5,8 +5,8 @@ Implement:
     + Draw effects (compute shaders)
     + draw params
     + Make animations frame based
+    + text and fonts
     - rotate sprites
-    - text and fonts
     - arr2d iterator returns tuple (pos, value)
     - Additive drawing
 

@@ -7,7 +7,7 @@ use super::font::Font;
 
 
 /// Draws text with the given font to the target bitmap.
-pub fn draw(s: &str, font: &dyn Font, width: Option<i32>, org: IVec2, b: &mut dyn Bitmap) {
+pub fn draw(s: &str, font: &dyn Font, width: Option<i32>, org: IVec2, target: &mut dyn Bitmap) {
     let mut grid_pos = IVec2::ZERO;
 
     for c in s.chars() {
@@ -16,7 +16,7 @@ pub fn draw(s: &str, font: &dyn Font, width: Option<i32>, org: IVec2, b: &mut dy
 
         let src = ir(char_data.src_pos, font.char_size());
 
-        b.draw_texture(font.texture(), src, dst_pos);
+        target.draw_texture(font.texture(), src, dst_pos);
 
         // Increment draw position.
         grid_pos.x += 1;

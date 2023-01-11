@@ -152,7 +152,7 @@ pub struct Arr2DIter<'a, T> {
 }
 
 impl<'a, T> Iterator for Arr2DIter<'a, T> {
-    type Item = &'a T;
+    type Item = (IVec2, &'a T);
 
     fn next(&mut self) -> Option<Self::Item> {
         let curr_pos = self.curr_pos;
@@ -160,7 +160,11 @@ impl<'a, T> Iterator for Arr2DIter<'a, T> {
 
         self.curr_pos = self.arr2d.to_pos(idx + 1);
 
-        self.arr2d.get_i(idx)
+        if let Some(value) = self.arr2d.get_i(idx) {
+            Some((curr_pos, value))
+        } else {
+            None
+        }
     }
 }
 
