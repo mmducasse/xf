@@ -7,6 +7,8 @@ Implement:
     + Make animations frame based
     - rotate sprites
     - text and fonts
+    - arr2d iterator returns tuple (pos, value)
+    - Additive drawing
 
 Test:
   - Rotations
