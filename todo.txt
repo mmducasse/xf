@@ -6,8 +6,8 @@ Implement:
     + draw params
     + Make animations frame based
     + text and fonts
+    + arr2d iterator returns tuple (pos, value)
     - rotate sprites
-    - arr2d iterator returns tuple (pos, value)
     - Additive drawing
 
 Test:
