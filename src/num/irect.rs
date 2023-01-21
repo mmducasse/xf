@@ -18,6 +18,9 @@ pub const fn rect(x: i32, y: i32, w: i32, h: i32) -> IRect {
 }
 
 impl IRect {
+    /// Rectangle with zero position and size.
+    pub const ZERO: Self = rect(0, 0, 0, 0);
+
     /// Creates a rectangle at `(0, 0)` with the given size.
     pub fn of_size(size: IVec2) -> Self {
         Self { pos: IVec2::ZERO, size }
@@ -118,6 +121,11 @@ impl IRect {
             pos: self.pos - i2(x, x),
             size,
         }
+    }
+
+    /// This rectangle with it's position offset by some vector.
+    pub fn offset_by(&self, offset: IVec2) -> Self {
+        ir(self.pos + offset, self.size)
     }
 
     /// Adjusts this rectangle's positioin to keep it

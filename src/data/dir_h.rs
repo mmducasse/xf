@@ -20,4 +20,11 @@ impl DirH {
     pub fn unit(self) -> IVec2 {
         self.to_dir4().unit()
     }
+
+    pub fn opposite(self) -> DirH {
+        match self {
+            DirH::L => DirH::R,
+            DirH::R => DirH::L,
+        }
+    }
 }
