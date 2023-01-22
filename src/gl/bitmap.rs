@@ -37,12 +37,13 @@ pub trait Bitmap {
 
     fn draw_texture_x(&mut self, texture: &Texture, dst_pt: IVec2, params: DrawParams) {
         let src = params.src.unwrap_or(texture.bounds());
+        let offset = dst_pt - src.pos;
+
         let dst = ir(dst_pt, src.size)
             .intersection(IRect::of_size(self.size()))
             .unwrap_or(IRect::ZERO);
 
-        let src = ir(src.pos, dst.size);
-        let offset = dst_pt - src.pos;
+        let src = ir(dst.pos - offset, dst.size);
 
         for src_pt in src.iter() {
             let dst = src_pt + offset;
