@@ -14,14 +14,17 @@ impl<T> Arr2D<T> {
     }
 
     pub fn get(&self, pos: IVec2) -> Option<&T> {
-        if pos.x < 0 || pos.y < 0 { return None }
-        let i = self.to_idx(pos);
-        self.get_i(i)
+        if !self.bounds().contains(pos) { None } else {
+            let i = self.to_idx(pos);
+            self.get_i(i)
+        }
     }
 
     pub fn get_mut(&mut self, pos: IVec2) -> Option<&mut T> {
-        let i = self.to_idx(pos);
-        self.get_i_mut(i)
+        if !self.bounds().contains(pos) { None } else {
+            let i = self.to_idx(pos);
+            self.get_i_mut(i)
+        }
     }
 
     pub fn get_i(&self, idx: usize) -> Option<&T> {

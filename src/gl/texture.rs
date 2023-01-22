@@ -19,7 +19,7 @@ impl Bitmap for Texture {
         *self.get(pos).unwrap_or(&DEFAULT)
     }
 
-    fn set_pixel(&mut self, pos: IVec2, color: Color) {
+    unsafe fn set_pixel(&mut self, pos: IVec2, color: Color) {
         self.set(pos, color);
     }
 }
