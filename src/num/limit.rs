@@ -1,4 +1,4 @@
-use std::ops::{AddAssign, SubAssign, Add, Sub};
+use std::{ops::{AddAssign, SubAssign, Add, Sub}, fmt::Display};
 
 #[derive(Clone, Copy)]
 pub struct Limit<T> {
@@ -8,7 +8,8 @@ pub struct Limit<T> {
 }
 
 impl<T> Limit<T>
-where T: Copy {
+where T: Copy
+{
     pub const fn new(min: T, max: T, value: T) -> Self {
         Self { min, max, value, }
     }
@@ -19,6 +20,14 @@ where T: Copy {
 
     pub const fn new_max(min: T, max: T) -> Self {
         Self { min, max, value: max, }
+    }
+}
+
+impl<T> Display for Limit<T>
+where T: Display
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.value.fmt(f)
     }
 }
 
