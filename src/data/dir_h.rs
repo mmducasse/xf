@@ -3,7 +3,7 @@ use crate::num::ivec2::IVec2;
 use super::dir4::Dir4;
 
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum DirH {
     L,
     R,
@@ -14,6 +14,14 @@ impl DirH {
         match self {
             DirH::L => Dir4::W,
             DirH::R => Dir4::E,
+        }
+    }
+
+    pub fn from_x(x: i32) -> DirH {
+        if x < 0 {
+            DirH::L
+        } else {
+            DirH::R
         }
     }
 
