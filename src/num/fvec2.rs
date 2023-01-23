@@ -18,4 +18,19 @@ impl FVec2 {
             y: self.y as i32,
         }
     }
+
+    pub fn magnitude(&self) -> f32 {
+        let x = self.x;
+        let y = self.y;
+
+        f32::sqrt(x * x + y * y)
+    }
+
+    pub fn normalize(&self) -> FVec2 {
+        let mag = self.magnitude();
+        f2(
+            self.x / mag,
+            self.y / mag, 
+        )
+    }
 }
