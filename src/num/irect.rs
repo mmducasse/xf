@@ -1,5 +1,5 @@
 
-use super::ivec2::{IVec2, i2};
+use super::{ivec2::{IVec2, i2}, range::Range};
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub struct IRect {
@@ -69,6 +69,18 @@ impl IRect {
     #[inline]
     pub fn center(&self) -> IVec2 {
         self.pos + (self.size / 2)
+    }
+
+    /// The range from left to right edge.
+    #[inline]
+    pub fn x_range(&self) -> Range<i32> {
+        Range::new(self.left(), self.right())
+    }
+
+    /// The range from top to bottom edge.
+    #[inline]
+    pub fn y_range(&self) -> Range<i32> {
+        Range::new(self.top(), self.bottom())
     }
 
     /// Does the rectangle contain the point `pt`?
