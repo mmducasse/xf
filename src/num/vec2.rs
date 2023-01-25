@@ -7,19 +7,13 @@ use std::{
     fmt::Debug
 };
 
+use super::lerp::Lerp;
+
 /// 2D vector.
 pub struct Vec2<T> {
     pub x: T,
     pub y: T,
 }
-
-// pub fn iv(x: i32, y: i32) -> Vec2<i32> {
-//     Vec2 { x, y }
-// }
-
-// pub fn fv(x: f32, y: f32) -> Vec2<f32> {
-//     Vec2 { x, y }
-// }
 
 impl<T> Vec2<T>
 where T: Copy {
@@ -183,5 +177,16 @@ where T: Copy + MulAssign<T> {
     fn mul_assign(&mut self, rhs: Vec2<T>) {
         self.x *= rhs.x;
         self.y *= rhs.y;
+    }
+}
+
+impl<T> Lerp<Vec2<T>> for Vec2<T>
+where T: Lerp<T>
+{
+    fn lerp(y0: Self, y1: Self, x: f32) -> Vec2<T> {
+        Self {
+            x: T::lerp(y0.x, y1.x, x),
+            y: T::lerp(y0.y, y1.y, x),
+        }
     }
 }

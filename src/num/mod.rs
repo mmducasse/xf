@@ -8,3 +8,5 @@ pub mod limit;
 pub mod math;
 
 mod test;
+pub mod range;
+pub mod lerp;

@@ -69,3 +69,18 @@ fn can_scale() {
 
     assert_eq!(c, i2(12, 16));
 }
+
+#[test]
+fn can_lerp() {
+    use crate::num::range::Range;
+    
+    let y0 = i2(2, 4);
+    let y1 = i2(8, 10);
+    let r = Range::new(y0, y1);
+
+    assert_eq!(r.lerp(-0.5), i2(-1, 1));
+    assert_eq!(r.lerp(0.0), i2(2, 4));
+    assert_eq!(r.lerp(0.5), i2(5, 7));
+    assert_eq!(r.lerp(1.0), i2(8, 10));
+    assert_eq!(r.lerp(1.5), i2(11, 13));
+}
