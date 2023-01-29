@@ -34,6 +34,8 @@ impl IVec2 {
     }
 
     pub const fn wrap(idx: i32, width: i32) -> IVec2 {
+        assert!(idx >= 0);
+        assert!(width >= 0);
         IVec2 {
             x: idx % width,
             y: idx / width,
@@ -41,6 +43,9 @@ impl IVec2 {
     }
 
     pub const fn unwrap(pos: IVec2, width: i32) -> i32 {
+        assert!(pos.x >= 0);
+        assert!(pos.y >= 0);
+        assert!(width >= 0);
         (pos.y * width) + pos.x
     }
 }

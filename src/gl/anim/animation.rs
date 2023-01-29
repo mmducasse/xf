@@ -5,13 +5,13 @@ pub trait Animation {
     /// Number of frames in the animation.
     fn len(&self) -> usize;
 
-    /// Duration of a frame (in game cycles).
-    fn frame_dur(&self) -> u32;
+    /// Duration of a frame (in seconds).
+    fn frame_dur_s(&self) -> f32;
 
     /// Whether the animation loops back to the
     /// first frame after completing.
     fn loops(&self) -> bool;
 
-    /// Returns the frame associated with the given time (in game cycles).
-    fn at(&self, time: u32) -> Frame;
+    /// Returns the frame associated with the given time (in seconds).
+    fn at(&self, time: f32) -> Frame;
 }

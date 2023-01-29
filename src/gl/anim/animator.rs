@@ -12,7 +12,7 @@ pub type AnimatorMapFn<T> = fn(key: T) -> &'static dyn Animation;
 /// Stores the state of an animation.
 pub struct Animator<T> {
     curr_key: T,
-    pub curr_time: u32,
+    pub curr_time_s: f32,
     sprite_size: IVec2,
     map_fn: AnimatorMapFn<T>,
 }
@@ -24,14 +24,14 @@ where
     pub fn new(start_key: T, sprite_size: IVec2, map_fn: AnimatorMapFn<T>) -> Self {
         Self {
             curr_key: start_key,
-            curr_time: 0,
+            curr_time_s: 0.0,
             sprite_size,
             map_fn,
         }
     }
 
-    pub fn update(&mut self) {
-        self.curr_time += 1;
+    pub fn update(&mut self, delta_s: f32) {
+        self.curr_time_s += delta_s;
     }
 
     pub fn get_key(&self) -> T {
@@ -41,7 +41,7 @@ where
     pub fn set_key(&mut self, key: T, reset: bool) {
         if self.curr_key != key || reset {
             self.curr_key = key;
-            self.curr_time = 0;
+            self.curr_time_s = 0.0;
         }
     }
 
@@ -50,7 +50,7 @@ where
     }
 
     pub fn curr_frame(&self) -> Frame {
-        self.curr_animation().at(self.curr_time)
+        self.curr_animation().at(self.curr_time_s)
     }
 
     pub fn completion(&self) -> f32 {
@@ -58,8 +58,8 @@ where
         if animation.loops() {
             0.0
         } else {
-            let total_dur = animation.frame_dur() * animation.len() as u32;
-            self.curr_time as f32 / total_dur as f32
+            let total_dur = animation.frame_dur_s() * animation.len() as f32;
+            self.curr_time_s as f32 / total_dur as f32
         }
     }
 
@@ -68,7 +68,7 @@ where
     }
 
     pub fn draw(&self, texture: &Texture, origin: IVec2, target: &mut dyn Bitmap) {
-        let frame = self.curr_animation().at(self.curr_time);
+        let frame = self.curr_animation().at(self.curr_time_s);
         let src = ir(frame.src_loc * self.sprite_size, self.sprite_size);
         let dst = origin + frame.draw_offset;
 
