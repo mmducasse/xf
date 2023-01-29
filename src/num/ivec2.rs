@@ -32,4 +32,15 @@ impl IVec2 {
             y: a.y * b.y,
         }
     }
+
+    pub const fn wrap(idx: i32, width: i32) -> IVec2 {
+        IVec2 {
+            x: idx % width,
+            y: idx / width,
+        }
+    }
+
+    pub const fn unwrap(pos: IVec2, width: i32) -> i32 {
+        (pos.y * width) + pos.x
+    }
 }

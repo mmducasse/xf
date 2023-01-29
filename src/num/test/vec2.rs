@@ -75,3 +75,22 @@ fn can_lerp() {
     assert_eq!(r.lerp(1.0), i2(8, 10));
     assert_eq!(r.lerp(1.5), i2(11, 13));
 }
+
+#[test]
+fn can_wrap_from_i32() {
+    assert_eq!(IVec2::wrap(0, 1), i2(0, 0));
+    assert_eq!(IVec2::wrap(0, 5), i2(0, 0));
+    assert_eq!(IVec2::wrap(2, 1), i2(0, 2));
+    assert_eq!(IVec2::wrap(2, 2), i2(0, 1));
+    assert_eq!(IVec2::wrap(2, 5), i2(2, 0));
+    assert_eq!(IVec2::wrap(10, 5), i2(0, 2));
+}
+
+#[test]
+fn can_unwrap_to_i32() {
+    assert_eq!(IVec2::unwrap(i2(0, 0), 1), 0);
+    assert_eq!(IVec2::unwrap(i2(0, 0), 10), 0);
+    assert_eq!(IVec2::unwrap(i2(2, 0), 1), 2);
+    assert_eq!(IVec2::unwrap(i2(2, 0), 10), 2);
+    assert_eq!(IVec2::unwrap(i2(2, 3), 4), 14);
+}
