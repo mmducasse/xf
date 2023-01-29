@@ -1,5 +1,5 @@
 // use crate::{
-//     gl::{shader::{Shader, DrawPixel, ShaderEffect}, color::Color, texture::Texture}, 
+//     gl::{shader::{Shader, DrawPixel, ShaderEffect}, color::Color, texture::Texture},
 //     num::{irect::{IRect, rect}, ivec2::IVec2}
 // };
 
@@ -23,9 +23,9 @@
 //         // This pixel is transparent.
 //         for offset in NEIGHBOR_REGION.iter() {
 //             if let Some(color) = texture.get(pos + offset) {
-//                 if color.a != 0 { 
+//                 if color.a != 0 {
 //                     // But it's neighbor is not!
-//                     return true; 
+//                     return true;
 //                 }
 //             }
 //         }

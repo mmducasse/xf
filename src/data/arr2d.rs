@@ -1,6 +1,7 @@
-
-use crate::num::{ivec2::{IVec2, i2}, irect::IRect};
-
+use crate::num::{
+    irect::IRect,
+    ivec2::{i2, IVec2},
+};
 
 pub struct Arr2D<T> {
     data: Vec<T>,
@@ -14,14 +15,18 @@ impl<T> Arr2D<T> {
     }
 
     pub fn get(&self, pos: IVec2) -> Option<&T> {
-        if !self.bounds().contains(pos) { None } else {
+        if !self.bounds().contains(pos) {
+            None
+        } else {
             let i = self.to_idx(pos);
             self.get_i(i)
         }
     }
 
     pub fn get_mut(&mut self, pos: IVec2) -> Option<&mut T> {
-        if !self.bounds().contains(pos) { None } else {
+        if !self.bounds().contains(pos) {
+            None
+        } else {
             let i = self.to_idx(pos);
             self.get_i_mut(i)
         }
@@ -48,14 +53,18 @@ impl<T> Arr2D<T> {
             let idx = self.to_idx(pos);
             self.data[idx] = value;
             true
-        } else { false }
+        } else {
+            false
+        }
     }
 
     pub fn set_i(&mut self, idx: usize, value: T) -> bool {
         if idx < self.data.len() {
             self.data[idx] = value;
             true
-        } else { false }
+        } else {
+            false
+        }
     }
 
     pub fn size(&self) -> IVec2 {
@@ -101,7 +110,10 @@ impl<T> Arr2D<T> {
     }
 
     pub fn iter(&self) -> Arr2DIter<'_, T> {
-        Arr2DIter { arr2d: self, curr_pos: i2(0, 0) }
+        Arr2DIter {
+            arr2d: self,
+            curr_pos: i2(0, 0),
+        }
     }
 }
 
@@ -122,7 +134,7 @@ impl<T: Copy> Arr2D<T> {
                 let value = *self.get(src_pos).unwrap();
                 copy.set(dst_pos, value);
             }
-    
+
             copy
         } else {
             Self::new(vec![], 0)
@@ -172,7 +184,8 @@ impl<'a, T> Iterator for Arr2DIter<'a, T> {
 }
 
 impl<T> Clone for Arr2D<T>
-    where T: Clone
+where
+    T: Clone,
 {
     fn clone(&self) -> Self {
         Self {

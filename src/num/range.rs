@@ -1,7 +1,9 @@
-use std::{ops::Sub, fmt::{Debug, Display}};
+use std::{
+    fmt::{Debug, Display},
+    ops::Sub,
+};
 
 use super::lerp::Lerp;
-
 
 /// A range that spans two values (inclusive).
 pub struct Range<T> {
@@ -16,7 +18,8 @@ impl<T> Range<T> {
 }
 
 impl<T> Range<T>
-where T: PartialOrd<T>
+where
+    T: PartialOrd<T>,
 {
     pub fn contains(&self, value: T) -> bool {
         self.a <= value && value <= self.b
@@ -24,7 +27,8 @@ where T: PartialOrd<T>
 }
 
 impl<T> Range<T>
-where T: Clone + Copy + PartialOrd<T>
+where
+    T: Clone + Copy + PartialOrd<T>,
 {
     pub fn abs(&self) -> Range<T> {
         if self.b < self.a {
@@ -36,7 +40,8 @@ where T: Clone + Copy + PartialOrd<T>
 }
 
 impl<T> Range<T>
-where T: Sub<T, Output = T> + Clone
+where
+    T: Sub<T, Output = T> + Clone,
 {
     pub fn delta(&self) -> T {
         self.b.clone() - self.a.clone()
@@ -44,7 +49,8 @@ where T: Sub<T, Output = T> + Clone
 }
 
 impl<T> Range<T>
-where T: Lerp<T> + Clone
+where
+    T: Lerp<T> + Clone,
 {
     pub fn lerp(&self, x: f32) -> T {
         T::lerp(self.a.clone(), self.b.clone(), x)
@@ -52,29 +58,34 @@ where T: Lerp<T> + Clone
 }
 
 impl<T> Clone for Range<T>
-where T: Clone
+where
+    T: Clone,
 {
     fn clone(&self) -> Self {
-        Self { 
-            a: self.a.clone(), 
-            b: self.b.clone() 
+        Self {
+            a: self.a.clone(),
+            b: self.b.clone(),
         }
     }
 }
 
-impl<T> Copy for Range<T>
-where T: Clone + Copy { }
+impl<T> Copy for Range<T> where T: Clone + Copy {}
 
 impl<T> Debug for Range<T>
-where T: Debug
+where
+    T: Debug,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("Range").field("a", &self.a).field("b", &self.b).finish()
+        f.debug_struct("Range")
+            .field("a", &self.a)
+            .field("b", &self.b)
+            .finish()
     }
 }
 
 impl<T> Display for Range<T>
-where T: Display
+where
+    T: Display,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "[{}, {}]", self.a, self.b)
@@ -82,7 +93,8 @@ where T: Display
 }
 
 impl<T> PartialEq<Range<T>> for Range<T>
-where T: PartialEq<T>
+where
+    T: PartialEq<T>,
 {
     fn eq(&self, other: &Range<T>) -> bool {
         self.a == other.a && self.b == other.b

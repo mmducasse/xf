@@ -1,5 +1,4 @@
 #[cfg(test)]
-
 #[test]
 fn can_check_if_contains() {
     use crate::num::range::Range;

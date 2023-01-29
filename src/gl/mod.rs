@@ -1,8 +1,7 @@
-
-pub mod color;
+pub mod anim;
 pub mod bitmap;
-pub mod texture;
+pub mod color;
+pub mod draw_params;
 pub mod shader;
 pub mod shader_effects;
-pub mod draw_params;
-pub mod anim;
+pub mod texture;

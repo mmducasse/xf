@@ -1,10 +1,9 @@
 use crate::{
-    num::{ivec2::IVec2, irect::ir}, 
-    gl::bitmap::Bitmap
+    gl::bitmap::Bitmap,
+    num::{irect::ir, ivec2::IVec2},
 };
 
 use super::font::Font;
-
 
 /// Draws text with the given font to the target bitmap.
 pub fn draw(s: &str, font: &dyn Font, width: Option<i32>, org: IVec2, target: &mut dyn Bitmap) {

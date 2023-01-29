@@ -20,11 +20,8 @@ pub struct Shader {
 
 impl Shader {
     pub fn new(effect: ShaderEffect) -> Self {
-        Self {
-            effect,
-        }
+        Self { effect }
     }
-
 
     /// Applied the shader's effect to a `DrawPixel`.
     #[inline]

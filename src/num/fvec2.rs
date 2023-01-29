@@ -1,5 +1,4 @@
-
-use super::{vec2::Vec2, ivec2::IVec2};
+use super::{ivec2::IVec2, vec2::Vec2};
 
 pub type FVec2 = Vec2<f32>;
 
@@ -28,9 +27,6 @@ impl FVec2 {
 
     pub fn normalize(&self) -> FVec2 {
         let mag = self.magnitude();
-        f2(
-            self.x / mag,
-            self.y / mag, 
-        )
+        f2(self.x / mag, self.y / mag)
     }
 }

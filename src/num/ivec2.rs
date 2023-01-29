@@ -1,5 +1,4 @@
-
-use super::{vec2::Vec2, fvec2::FVec2};
+use super::{fvec2::FVec2, vec2::Vec2};
 
 /// 2D vector of `i32` values.
 pub type IVec2 = Vec2<i32>;

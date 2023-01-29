@@ -1,4 +1,3 @@
-
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Dir4 {
     N,
@@ -11,7 +10,10 @@ use std::fmt::{self, Display};
 
 use Dir4::*;
 
-use crate::num::{ivec2::{IVec2, i2}, math::mod_};
+use crate::num::{
+    ivec2::{i2, IVec2},
+    math::mod_,
+};
 
 use super::spin::Spin;
 
@@ -87,8 +89,10 @@ impl Display for Dir4 {
         use Dir4::*;
 
         let str = match *self {
-            N => "N", E => "E",
-            S => "S", W => "W",
+            N => "N",
+            E => "E",
+            S => "S",
+            W => "W",
         };
 
         write!(f, "{}", str)

@@ -1,6 +1,4 @@
-
 use super::ivec2::{i2, IVec2};
-
 
 pub fn lerp(a: i32, b: i32, f: f32) -> i32 {
     let x0;
@@ -21,17 +19,13 @@ pub fn lerp(a: i32, b: i32, f: f32) -> i32 {
     x as i32
 }
 
-
 pub fn lerp_c(a: i32, b: i32, f: f32) -> i32 {
     let f = f.clamp(0.0, 1.0);
     lerp(a, b, f)
 }
 
 pub fn lerp_p(a: IVec2, b: IVec2, f: f32) -> IVec2 {
-    i2(
-        lerp(a.x, b.x, f), 
-        lerp(a.y, b.y, f)
-    )
+    i2(lerp(a.x, b.x, f), lerp(a.y, b.y, f))
 }
 
 pub const fn mod_(x: i32, d: i32) -> i32 {
@@ -43,8 +37,5 @@ pub const fn mod_(x: i32, d: i32) -> i32 {
 }
 
 pub const fn mod_p(p: IVec2, d: IVec2) -> IVec2 {
-    i2(
-        mod_(p.x, d.x),
-        mod_(p.y, d.y)
-    )
+    i2(mod_(p.x, d.x), mod_(p.y, d.y))
 }

@@ -1,6 +1,5 @@
 use crate::num::ivec2::IVec2;
 
-
 #[derive(Clone, Copy, Debug)]
 /// A single frame in an animation sequence.
 pub struct Frame {

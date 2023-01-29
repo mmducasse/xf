@@ -1,5 +1,3 @@
-
-
 /// A timer that completes after a given number
 /// of frames have elapsed.
 #[derive(Clone, Copy, PartialEq)]
@@ -24,9 +22,13 @@ impl Timer {
         self.elapsed += 1;
     }
 
-    pub fn duration(&self) -> u32 { self.duration }
-    pub fn elapsed(&self) -> u32 { self.elapsed }
-    
+    pub fn duration(&self) -> u32 {
+        self.duration
+    }
+    pub fn elapsed(&self) -> u32 {
+        self.elapsed
+    }
+
     pub fn is_done(&self) -> bool {
         self.elapsed >= self.duration
     }

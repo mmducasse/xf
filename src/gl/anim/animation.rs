@@ -1,6 +1,5 @@
 use super::frame::Frame;
 
-
 /// An associations between times and sprite frames.
 pub trait Animation {
     /// Number of frames in the animation.
@@ -16,4 +15,3 @@ pub trait Animation {
     /// Returns the frame associated with the given time (in game cycles).
     fn at(&self, time: u32) -> Frame;
 }
-

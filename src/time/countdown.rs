@@ -1,5 +1,3 @@
-
-
 pub struct Countdown {
     rem: u32,
 }
@@ -9,7 +7,9 @@ impl Countdown {
         Self { rem: duration }
     }
 
-    pub fn remaining(&self) -> u32 { self.rem }
+    pub fn remaining(&self) -> u32 {
+        self.rem
+    }
 
     pub fn decrement(&mut self) {
         if self.rem > 0 {

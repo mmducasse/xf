@@ -1,13 +1,7 @@
+pub use self::{animation::*, animator::*, frame::*, seq::*};
 
-pub use self::{
-    frame::*,
-    seq::*,
-    animation::*,
-    animator::*,
-};
-
-pub mod frame;
-pub mod seq;
 pub mod animation;
 pub mod animator;
+pub mod frame;
 pub mod macros;
+pub mod seq;

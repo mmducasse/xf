@@ -1,5 +1,4 @@
-use crate::{num::ivec2::IVec2, gl::texture::Texture};
-
+use crate::{gl::texture::Texture, num::ivec2::IVec2};
 
 /// A mapping from char values to a region in a font texture image.
 pub trait Font {
@@ -7,7 +6,6 @@ pub trait Font {
     fn lookup(&self, c: char) -> CharData;
     fn texture(&self) -> &Texture;
 }
-
 
 pub struct CharData {
     pub src_pos: IVec2,

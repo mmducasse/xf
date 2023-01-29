@@ -1,6 +1,4 @@
-
 use serde_derive::Deserialize;
-
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -34,8 +32,6 @@ pub struct JsonTileset {
 
 impl JsonTileset {
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, String> {
-        serde_json::from_slice(bytes).or_else(|e| {
-            Err(e.to_string())
-        })
+        serde_json::from_slice(bytes).or_else(|e| Err(e.to_string()))
     }
 }

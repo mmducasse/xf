@@ -1,4 +1,3 @@
-
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct Color {
     pub r: u8,
@@ -13,11 +12,11 @@ impl Color {
     }
 
     pub const fn rgba(rgba: u32) -> Self {
-        Self { 
-            r: ((rgba >> 24) & 0xFF) as u8, 
-            g: ((rgba >> 16) & 0xFF) as u8, 
-            b: ((rgba >> 08) & 0xFF) as u8, 
-            a: ((rgba >> 00) & 0xFF) as u8 
+        Self {
+            r: ((rgba >> 24) & 0xFF) as u8,
+            g: ((rgba >> 16) & 0xFF) as u8,
+            b: ((rgba >> 08) & 0xFF) as u8,
+            a: ((rgba >> 00) & 0xFF) as u8,
         }
     }
 

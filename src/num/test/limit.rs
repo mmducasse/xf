@@ -1,6 +1,4 @@
 #[cfg(test)]
-
-
 #[test]
 fn add_and_sub_assign() {
     use crate::num::limit::Limit;
@@ -8,16 +6,16 @@ fn add_and_sub_assign() {
     let mut lim_i32: Limit<i32> = Limit::new_min(0, 10);
 
     assert_eq!(lim_i32.value, 0);
-    
+
     lim_i32 += 7;
     assert_eq!(lim_i32.value, 7);
-    
+
     lim_i32 += 7;
     assert_eq!(lim_i32.value, 10);
-    
+
     lim_i32 -= 7;
     assert_eq!(lim_i32.value, 3);
-    
+
     lim_i32 -= 7;
     assert_eq!(lim_i32.value, 0);
 }

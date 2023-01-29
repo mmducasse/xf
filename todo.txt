@@ -14,3 +14,4 @@ Test:
   - Rotations
   - Shaders
   - Text
+  - Make animations time based again

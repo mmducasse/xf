@@ -1,6 +1,5 @@
 use std::mem::swap;
 
-
 /// An efficient FIFO queue.
 pub struct Queue<T> {
     in_: Vec<T>,

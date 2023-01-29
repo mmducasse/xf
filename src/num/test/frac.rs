@@ -1,5 +1,4 @@
 #[cfg(test)]
-
 use crate::num::frac::Frac;
 
 #[allow(dead_code)]
@@ -10,7 +9,7 @@ fn f128(num: i32) -> crate::num::frac::Frac<128> {
 #[test]
 fn arithmetic() {
     let f1 = f128(5);
-    let f2= f128(7);
+    let f2 = f128(7);
 
     assert!(f1 != f2); // Eq
     assert!(f1 < f2); // Ord

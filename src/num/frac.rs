@@ -1,5 +1,7 @@
-use std::{ops::{Add, Sub, Mul}, fmt::Display};
-
+use std::{
+    fmt::Display,
+    ops::{Add, Mul, Sub},
+};
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 pub struct Frac<const DEN: i32> {
@@ -50,9 +52,7 @@ impl<const DEN: i32> Into<f32> for Frac<DEN> {
 
 impl<const DEN: i32> From<i32> for Frac<DEN> {
     fn from(i: i32) -> Self {
-        Frac {
-            num: i * DEN,
-        }
+        Frac { num: i * DEN }
     }
 }
 

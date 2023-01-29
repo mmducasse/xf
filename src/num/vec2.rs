@@ -1,10 +1,6 @@
 use std::{
-    ops::{
-        Add, Sub, Mul, Div,
-        AddAssign, SubAssign, MulAssign, 
-        Neg
-    }, 
-    fmt::Debug
+    fmt::Debug,
+    ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
 use super::lerp::Lerp;
@@ -16,21 +12,26 @@ pub struct Vec2<T> {
 }
 
 impl<T> Vec2<T>
-where T: Copy {
+where
+    T: Copy,
+{
     pub const fn splat(m: T) -> Self {
         Self { x: m, y: m }
     }
 }
 
 impl<T> Vec2<T>
-where T: Add<T, Output = T> + Copy {
+where
+    T: Add<T, Output = T> + Copy,
+{
     pub fn sum(&self) -> T {
         self.x + self.y
     }
 }
 
 impl<T> Vec2<T>
-where T: Mul<T, Output = T> + Copy
+where
+    T: Mul<T, Output = T> + Copy,
 {
     pub fn product(&self) -> T {
         self.x * self.y
@@ -38,7 +39,8 @@ where T: Mul<T, Output = T> + Copy
 }
 
 impl<T> Clone for Vec2<T>
-where T: Clone
+where
+    T: Clone,
 {
     fn clone(&self) -> Self {
         Self {
@@ -48,32 +50,40 @@ where T: Clone
     }
 }
 
-impl<T> Copy for Vec2<T>
-where T: Copy
-{
-}
+impl<T> Copy for Vec2<T> where T: Copy {}
 
 impl<T> Debug for Vec2<T>
-where T: Debug {
+where
+    T: Debug,
+{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("Vec2").field("x", &self.x).field("y", &self.y).finish()
+        f.debug_struct("Vec2")
+            .field("x", &self.x)
+            .field("y", &self.y)
+            .finish()
     }
 }
 
 impl<T> PartialEq for Vec2<T>
-where T: PartialEq {
+where
+    T: PartialEq,
+{
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y
     }
 }
 
 impl<T> Eq for Vec2<T>
-where T: Eq {
+where
+    T: Eq,
+{
     fn assert_receiver_is_total_eq(&self) {}
 }
 
 impl<T> Neg for Vec2<T>
-where T: Copy + Neg<Output = T> {
+where
+    T: Copy + Neg<Output = T>,
+{
     type Output = Vec2<T>;
 
     fn neg(self) -> Self::Output {
@@ -85,7 +95,9 @@ where T: Copy + Neg<Output = T> {
 }
 
 impl<T> Add<Vec2<T>> for Vec2<T>
-where T: Copy + Add<T, Output = T> {
+where
+    T: Copy + Add<T, Output = T>,
+{
     type Output = Vec2<T>;
 
     fn add(self, rhs: Vec2<T>) -> Self::Output {
@@ -97,7 +109,9 @@ where T: Copy + Add<T, Output = T> {
 }
 
 impl<T> Sub<Vec2<T>> for Vec2<T>
-where T: Copy + Sub<T, Output = T> {
+where
+    T: Copy + Sub<T, Output = T>,
+{
     type Output = Vec2<T>;
 
     fn sub(self, rhs: Vec2<T>) -> Self::Output {
@@ -109,7 +123,9 @@ where T: Copy + Sub<T, Output = T> {
 }
 
 impl<T> Mul<Vec2<T>> for Vec2<T>
-where T: Copy + Mul<T, Output = T> {
+where
+    T: Copy + Mul<T, Output = T>,
+{
     type Output = Vec2<T>;
 
     fn mul(self, rhs: Vec2<T>) -> Self::Output {
@@ -121,7 +137,9 @@ where T: Copy + Mul<T, Output = T> {
 }
 
 impl<T> Mul<T> for Vec2<T>
-where T: Copy + Mul<T, Output = T> {
+where
+    T: Copy + Mul<T, Output = T>,
+{
     type Output = Vec2<T>;
 
     fn mul(self, rhs: T) -> Self::Output {
@@ -133,7 +151,9 @@ where T: Copy + Mul<T, Output = T> {
 }
 
 impl<T> Div<Vec2<T>> for Vec2<T>
-where T: Copy + Div<T, Output = T> {
+where
+    T: Copy + Div<T, Output = T>,
+{
     type Output = Vec2<T>;
 
     fn div(self, rhs: Vec2<T>) -> Self::Output {
@@ -145,7 +165,9 @@ where T: Copy + Div<T, Output = T> {
 }
 
 impl<T> Div<T> for Vec2<T>
-where T: Copy + Div<T, Output = T> {
+where
+    T: Copy + Div<T, Output = T>,
+{
     type Output = Vec2<T>;
 
     fn div(self, rhs: T) -> Self::Output {
@@ -157,7 +179,9 @@ where T: Copy + Div<T, Output = T> {
 }
 
 impl<T> AddAssign<Vec2<T>> for Vec2<T>
-where T: Copy + AddAssign<T> {
+where
+    T: Copy + AddAssign<T>,
+{
     fn add_assign(&mut self, rhs: Vec2<T>) {
         self.x += rhs.x;
         self.y += rhs.y;
@@ -165,7 +189,9 @@ where T: Copy + AddAssign<T> {
 }
 
 impl<T> SubAssign<Vec2<T>> for Vec2<T>
-where T: Copy + SubAssign<T> {
+where
+    T: Copy + SubAssign<T>,
+{
     fn sub_assign(&mut self, rhs: Vec2<T>) {
         self.x -= rhs.x;
         self.y -= rhs.y;
@@ -173,7 +199,9 @@ where T: Copy + SubAssign<T> {
 }
 
 impl<T> MulAssign<Vec2<T>> for Vec2<T>
-where T: Copy + MulAssign<T> {
+where
+    T: Copy + MulAssign<T>,
+{
     fn mul_assign(&mut self, rhs: Vec2<T>) {
         self.x *= rhs.x;
         self.y *= rhs.y;
@@ -181,7 +209,8 @@ where T: Copy + MulAssign<T> {
 }
 
 impl<T> Lerp<Vec2<T>> for Vec2<T>
-where T: Lerp<T>
+where
+    T: Lerp<T>,
 {
     fn lerp(y0: Self, y1: Self, x: f32) -> Vec2<T> {
         Self {

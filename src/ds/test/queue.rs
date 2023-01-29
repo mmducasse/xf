@@ -1,5 +1,4 @@
 #[cfg(test)]
-
 #[test]
 fn should_be_fifo() {
     use crate::ds::queue::Queue;
@@ -39,7 +38,6 @@ fn should_have_accurate_count() {
     q.dequeue();
     assert_eq!(q.count(), 0);
 }
-
 
 #[test]
 fn should_be_empty_iff_count_eq_zero() {

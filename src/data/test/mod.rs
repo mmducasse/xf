@@ -1,3 +1,2 @@
-
-mod dir4;
 mod arr2d;
+mod dir4;

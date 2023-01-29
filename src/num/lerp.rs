@@ -1,4 +1,3 @@
-
 /// Linear interpolation between two values of type `Y`.
 pub trait Lerp<Y> {
     /// Performs linear interpolation between two values: `a` and `b`.
@@ -6,7 +5,6 @@ pub trait Lerp<Y> {
     /// `lerp(a, b, 1.0) == b`
     fn lerp(y0: Self, y1: Self, x: f32) -> Y;
 }
-
 
 impl Lerp<i32> for i32 {
     fn lerp(y0: Self, y1: Self, x: f32) -> i32 {

@@ -1,5 +1,7 @@
-
-use super::{ivec2::{IVec2, i2}, range::Range};
+use super::{
+    ivec2::{i2, IVec2},
+    range::Range,
+};
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub struct IRect {
@@ -14,7 +16,10 @@ pub const fn ir(pos: IVec2, size: IVec2) -> IRect {
 
 /// Creates an `IRect`.
 pub const fn rect(x: i32, y: i32, w: i32, h: i32) -> IRect {
-    IRect { pos: i2(x, y), size: i2(w, h) }
+    IRect {
+        pos: i2(x, y),
+        size: i2(w, h),
+    }
 }
 
 impl IRect {
@@ -23,7 +28,10 @@ impl IRect {
 
     /// Creates a rectangle at `(0, 0)` with the given size.
     pub fn of_size(size: IVec2) -> Self {
-        Self { pos: IVec2::ZERO, size }
+        Self {
+            pos: IVec2::ZERO,
+            size,
+        }
     }
 
     /// Creates a rectangle centered around `center`
@@ -35,35 +43,51 @@ impl IRect {
 
     /// The rectangle's x position (top-left origin).
     #[inline]
-    pub fn x(&self) -> i32 { self.pos.x }
-    
+    pub fn x(&self) -> i32 {
+        self.pos.x
+    }
+
     /// The rectangle's y position (top-left origin).
     #[inline]
-    pub fn y(&self) -> i32 { self.pos.y }
+    pub fn y(&self) -> i32 {
+        self.pos.y
+    }
 
     /// The rectangle's width.
     #[inline]
-    pub fn w(&self) -> i32 { self.size.x }
+    pub fn w(&self) -> i32 {
+        self.size.x
+    }
 
     /// The rectangle's width.
     #[inline]
-    pub fn h(&self) -> i32 { self.size.y }
+    pub fn h(&self) -> i32 {
+        self.size.y
+    }
 
     /// The rectangle's top-row y position.
     #[inline]
-    pub fn top(&self) -> i32 { self.y() }
+    pub fn top(&self) -> i32 {
+        self.y()
+    }
 
     /// The rectangle's bottom-row y position.
     #[inline]
-    pub fn bottom(&self) -> i32 { self.y() + self.h() - 1 }
+    pub fn bottom(&self) -> i32 {
+        self.y() + self.h() - 1
+    }
 
     /// The rectangle's left-column x position.
     #[inline]
-    pub fn left(&self) -> i32 { self.x() }
+    pub fn left(&self) -> i32 {
+        self.x()
+    }
 
     /// The rectangle's right-column x position.
     #[inline]
-    pub fn right(&self) -> i32 { self.x() + self.w() - 1 }
+    pub fn right(&self) -> i32 {
+        self.x() + self.w() - 1
+    }
 
     /// The rectangle's center point.
     #[inline]
@@ -85,18 +109,18 @@ impl IRect {
 
     /// Does the rectangle contain the point `pt`?
     pub fn contains(&self, pt: IVec2) -> bool {
-        (self.left() <= pt.x) && 
-        (self.right() >= pt.x) &&
-        (self.top() <= pt.y) && 
-        (self.bottom() >= pt.y)
+        (self.left() <= pt.x)
+            && (self.right() >= pt.x)
+            && (self.top() <= pt.y)
+            && (self.bottom() >= pt.y)
     }
 
     /// Does the rectangle overlap the other rectangle?
     pub fn overlaps(&self, other: IRect) -> bool {
-        self.left() <= other.right() &&
-        self.right() >= other.left() &&
-        self.top() <= other.bottom() &&
-        self.bottom() >= other.top()
+        self.left() <= other.right()
+            && self.right() >= other.left()
+            && self.top() <= other.bottom()
+            && self.bottom() >= other.top()
     }
 
     /// Gets the intersection of the two rectangles, if they overlap.
@@ -166,7 +190,10 @@ impl IRect {
     }
 
     pub fn iter<'a>(&'a self) -> IRectIter<'a> {
-        IRectIter { rect: self, curr: self.pos }
+        IRectIter {
+            rect: self,
+            curr: self.pos,
+        }
     }
 }
 

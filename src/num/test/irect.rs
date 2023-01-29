@@ -1,13 +1,11 @@
 #[cfg(test)]
-
 use crate::num::{irect::*, ivec2::i2};
-
 
 #[test]
 fn struct_of_ivec2() {
     let _a = IRect {
         pos: i2(1, 2),
-        size: i2(4, 4)
+        size: i2(4, 4),
     };
 }
 
@@ -85,7 +83,7 @@ fn can_overlap_other_rects() {
 
     let crosses_x = rect(-1, 1, 5, 2);
     assert!(irect.overlaps(crosses_x));
-    
+
     let crosses_y = rect(1, -1, 2, 6);
     assert!(irect.overlaps(crosses_y));
 
@@ -127,14 +125,7 @@ fn can_get_union() {
 
 #[test]
 fn iterable() {
-    let points = vec![
-        i2(0, 0),
-        i2(1, 0),
-        i2(2, 0),
-        i2(0, 1),
-        i2(1, 1),
-        i2(2, 1),
-    ];
+    let points = vec![i2(0, 0), i2(1, 0), i2(2, 0), i2(0, 1), i2(1, 1), i2(2, 1)];
 
     let irect = rect(0, 0, 2, 1);
 

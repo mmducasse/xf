@@ -1,21 +1,12 @@
 #[cfg(test)]
-
-use crate::num::ivec2::{IVec2, i2};
-
+use crate::num::ivec2::{i2, IVec2};
 
 #[test]
 fn struct_of_i32() {
-    let _a = IVec2 {
-        x: 1,
-        y: 2,
-    };
+    let _a = IVec2 { x: 1, y: 2 };
 
-    let _b = IVec2 {
-        x: -1,
-        y: -2,
-    };
+    let _b = IVec2 { x: -1, y: -2 };
 }
-
 
 #[test]
 fn easy_constr() {
@@ -73,7 +64,7 @@ fn can_scale() {
 #[test]
 fn can_lerp() {
     use crate::num::range::Range;
-    
+
     let y0 = i2(2, 4);
     let y1 = i2(8, 10);
     let r = Range::new(y0, y1);
