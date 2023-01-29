@@ -33,4 +33,10 @@ impl Time {
 
     /// The duration of the previous frame (in seconds).
     pub fn delta_s(&self) -> f32 { self.delta_s }
+
+    /// The number of frames that have elapsed since the game started.
+    pub fn frame_num(&self) -> u64 { self.frame_num }
+
+    /// The frames-per-second derived from the previous frame duration.
+    pub fn fps(&self) -> f32 { f32::round(1.0 / self.delta_s) }
 }

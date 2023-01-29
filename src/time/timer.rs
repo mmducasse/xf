@@ -1,5 +1,4 @@
-/// A timer that completes after a given number
-/// of frames have elapsed.
+/// A timer that completes after a given duration elapses.
 #[derive(Clone, Copy, PartialEq)]
 pub struct Timer {
     duration_s: f32,
