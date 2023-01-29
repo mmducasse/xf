@@ -1,4 +1,5 @@
 pub mod anim;
+pub mod anim2;
 pub mod bitmap;
 pub mod color;
 pub mod draw_params;

@@ -1,4 +1,3 @@
-
 use crate::{
     gl::{
         bitmap::{draw_rect_default, Bitmap},
@@ -94,8 +93,7 @@ fn draw_texture_x_custom(
     let dst_data = pixels.raw_pixels.get_frame_mut();
 
     for y in 0..src.h() {
-        let src_start_idx =
-            IVec2::unwrap(i2(0, y) + src.pos, texture.size().x) as usize;
+        let src_start_idx = IVec2::unwrap(i2(0, y) + src.pos, texture.size().x) as usize;
         let dst_start_idx =
             IVec2::unwrap(i2(0, y) + dst.pos, pixels_size.x) as usize * BYTE_PER_PIXEL;
 

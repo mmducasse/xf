@@ -2,7 +2,7 @@ use crate::num::ivec2::IVec2;
 
 use super::dir4::Dir4;
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum DirH {
     L,
     R,
