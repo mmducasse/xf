@@ -1,4 +1,3 @@
-use std::ptr::copy_nonoverlapping;
 
 use crate::{
     gl::{
@@ -12,7 +11,7 @@ use crate::{
         ivec2::{i2, IVec2},
     },
 };
-use pixels::Pixels as RawPixels;
+use pixels::{Error, Pixels as RawPixels};
 
 const BYTE_PER_PIXEL: usize = 4;
 
@@ -28,6 +27,10 @@ impl Pixels {
             raw_pixels: pixels,
             size,
         }
+    }
+
+    pub fn render(&self) -> Result<(), Error> {
+        self.raw_pixels.render()
     }
 }
 
@@ -58,22 +61,7 @@ impl Bitmap for Pixels {
     }
 
     fn draw_texture_x(&mut self, texture: &Texture, dst_pt: IVec2, params: DrawParams) {
-        let src = params.src.unwrap_or(texture.bounds());
-
-        let offset = dst_pt - src.pos;
-
-        let Some(dst) =
-            ir(dst_pt, src.size).intersection(IRect::of_size(self.size())) else {
-            return;
-        };
-
-        let src = ir(dst.pos - offset, dst.size);
-
-        for y in 0..src.h() {
-            let count = src.w() as usize * BYTE_PER_PIXEL;
-
-            draw_texture_row(self, texture, src.pos, dst.pos, y, count);
-        }
+        draw_texture_x_custom(self, texture, dst_pt, params);
     }
 
     fn draw_rect(&mut self, rect: IRect, color: Color) {
@@ -82,26 +70,47 @@ impl Bitmap for Pixels {
 }
 
 #[inline]
-fn draw_texture_row(
+fn draw_texture_x_custom(
     pixels: &mut Pixels,
     texture: &Texture,
-    src_pos: IVec2,
-    dst_pos: IVec2,
-    y: i32,
-    count: usize,
+    dst_pt: IVec2,
+    params: DrawParams,
 ) {
-    let src_start_idx =
-        IVec2::unwrap(i2(0, y) + src_pos, texture.size().x) as usize * BYTE_PER_PIXEL;
-    let dst_start_idx =
-        IVec2::unwrap(i2(0, y) + dst_pos, pixels.size().x) as usize * BYTE_PER_PIXEL;
+    let src = params.src.unwrap_or(texture.bounds());
+    let offset = dst_pt - src.pos;
 
-    unsafe {
-        let src_data = (texture.data().as_ptr() as *const u8).add(src_start_idx);
-        let dst_data = pixels
-            .raw_pixels
-            .get_frame_mut()
-            .as_mut_ptr()
-            .add(dst_start_idx);
-        copy_nonoverlapping(src_data, dst_data, count);
+    let Some(dst) =
+        ir(dst_pt, src.size)
+        .intersection(IRect::of_size(pixels.size())) else
+    {
+        return;
+    };
+
+    let src = ir(dst.pos - offset, dst.size);
+
+    let pixels_size = pixels.size();
+
+    let src_data = texture.data();
+    let dst_data = pixels.raw_pixels.get_frame_mut();
+
+    for y in 0..src.h() {
+        let src_start_idx =
+            IVec2::unwrap(i2(0, y) + src.pos, texture.size().x) as usize;
+        let dst_start_idx =
+            IVec2::unwrap(i2(0, y) + dst.pos, pixels_size.x) as usize * BYTE_PER_PIXEL;
+
+        for x in 0..src.w() as usize {
+            let src_idx = src_start_idx + x;
+            let dst_idx = dst_start_idx + x * BYTE_PER_PIXEL;
+            let color = src_data[src_idx];
+            if color.a < 10 {
+                continue;
+            }
+
+            dst_data[dst_idx + 0] = color.r;
+            dst_data[dst_idx + 1] = color.g;
+            dst_data[dst_idx + 2] = color.b;
+            dst_data[dst_idx + 3] = color.a;
+        }
     }
 }

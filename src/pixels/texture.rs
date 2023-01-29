@@ -1,28 +1,21 @@
-use std::io::Cursor;
-
 use crate::{
     gl::{color::Color, texture::Texture},
     num::{irect::IRect, ivec2::i2},
 };
-use image::io::Reader as ImageReader;
-use image::DynamicImage;
+use image::ImageFormat;
 
 pub fn load_texture(bytes: &[u8]) -> Option<Texture> {
-    let img: DynamicImage = ImageReader::new(Cursor::new(bytes))
-        .with_guessed_format()
-        .expect("Cursor io never fails")
-        .decode()
-        .ok()?;
+    let image = image::load_from_memory_with_format(bytes, ImageFormat::Png).ok()?;
 
-    let width = img.width() as i32;
-    let height = img.height() as i32;
+    let width = image.width() as i32;
+    let height = image.height() as i32;
 
     let bounds = IRect::of_size(i2(width, height));
 
     let vec_size = (bounds.w() * bounds.h()) as usize;
     let mut v = vec![Color::WHITE; vec_size];
 
-    if let Some(img) = img.as_rgba8() {
+    if let Some(img) = image.as_rgba8() {
         // RGBA8: has transparency.
         for p in bounds.iter() {
             let rgba8 = img.get_pixel(p.x as u32, p.y as u32);
@@ -34,7 +27,7 @@ pub fn load_texture(bytes: &[u8]) -> Option<Texture> {
                 a: rgba8[3],
             };
         }
-    } else if let Some(img) = img.as_rgb8() {
+    } else if let Some(img) = image.as_rgb8() {
         // RGB8: no transparency.
         for p in bounds.iter() {
             let rgba8 = img.get_pixel(p.x as u32, p.y as u32);
