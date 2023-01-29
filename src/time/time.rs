@@ -5,6 +5,7 @@ use std::time::{SystemTime, Duration};
 pub struct Time {
     now: SystemTime,
     delta_s: f32,
+    frame_num: u64,
 }
 
 impl Time {
@@ -12,6 +13,7 @@ impl Time {
         Self {
             now: SystemTime::now(),
             delta_s: 0.0,
+            frame_num: 0,
         }
     }
 
@@ -25,6 +27,8 @@ impl Time {
             self.now.duration_since(prev_time)
                     .unwrap_or(Duration::new(0, 0))
                     .as_secs_f32();
+
+        self.frame_num = u64::saturating_add(self.frame_num, 1);
     }
 
     /// The duration of the previous frame (in seconds).
