@@ -1,6 +1,5 @@
 use std::ptr::copy_nonoverlapping;
 
-use pixels::Pixels as RawPixels;
 use crate::{
     gl::{
         bitmap::{draw_rect_default, Bitmap},
@@ -13,6 +12,7 @@ use crate::{
         ivec2::{i2, IVec2},
     },
 };
+use pixels::Pixels as RawPixels;
 
 const BYTE_PER_PIXEL: usize = 4;
 

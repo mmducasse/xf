@@ -1,7 +1,13 @@
 use crate::{
-    data::arr2d::Arr2D, num::{ivec2::IVec2, irect::IRect}};
+    data::arr2d::Arr2D,
+    num::{irect::IRect, ivec2::IVec2},
+};
 
-use super::{color::Color, bitmap::{Bitmap, draw_rect_default, draw_texture_x_default}, draw_params::DrawParams};
+use super::{
+    bitmap::{draw_rect_default, draw_texture_x_default, Bitmap},
+    color::Color,
+    draw_params::DrawParams,
+};
 
 pub type Texture = Arr2D<Color>;
 
@@ -14,7 +20,9 @@ impl Texture {
 }
 
 impl Bitmap for Texture {
-    fn size(&self) -> IVec2 { self.size() }
+    fn size(&self) -> IVec2 {
+        self.size()
+    }
 
     fn get_pixel(&self, pos: IVec2) -> Color {
         *self.get(pos).unwrap_or(&DEFAULT)

@@ -3,8 +3,8 @@ pub mod ds;
 pub mod gl;
 pub mod map;
 pub mod num;
+pub mod pixels;
 pub mod time;
 pub mod ui;
-pub mod pixels;
 
 mod scratch; // todo delete

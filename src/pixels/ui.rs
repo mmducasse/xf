@@ -1,10 +1,10 @@
+use crate::num::ivec2::IVec2;
 use pixels::{Pixels as RawPixels, SurfaceTexture};
 use winit::{
     dpi::LogicalSize,
     event_loop::EventLoop,
     window::{Window, WindowBuilder},
 };
-use crate::num::ivec2::IVec2;
 
 use super::pixels::Pixels;
 

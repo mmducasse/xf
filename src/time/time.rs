@@ -1,5 +1,4 @@
-use std::time::{SystemTime, Duration};
-
+use std::time::{Duration, SystemTime};
 
 /// A record of the current frame time and duration.
 pub struct Time {
@@ -23,20 +22,27 @@ impl Time {
         let prev_time = self.now;
         self.now = SystemTime::now();
 
-        self.delta_s =
-            self.now.duration_since(prev_time)
-                    .unwrap_or(Duration::new(0, 0))
-                    .as_secs_f32();
+        self.delta_s = self
+            .now
+            .duration_since(prev_time)
+            .unwrap_or(Duration::new(0, 0))
+            .as_secs_f32();
 
         self.frame_num = u64::saturating_add(self.frame_num, 1);
     }
 
     /// The duration of the previous frame (in seconds).
-    pub fn delta_s(&self) -> f32 { self.delta_s }
+    pub fn delta_s(&self) -> f32 {
+        self.delta_s
+    }
 
     /// The number of frames that have elapsed since the game started.
-    pub fn frame_num(&self) -> u64 { self.frame_num }
+    pub fn frame_num(&self) -> u64 {
+        self.frame_num
+    }
 
     /// The frames-per-second derived from the previous frame duration.
-    pub fn fps(&self) -> f32 { f32::round(1.0 / self.delta_s) }
+    pub fn fps(&self) -> f32 {
+        f32::round(1.0 / self.delta_s)
+    }
 }

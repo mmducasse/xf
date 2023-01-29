@@ -1,11 +1,11 @@
 use std::io::Cursor;
 
-use image::io::Reader as ImageReader;
-use image::DynamicImage;
 use crate::{
     gl::{color::Color, texture::Texture},
     num::{irect::IRect, ivec2::i2},
 };
+use image::io::Reader as ImageReader;
+use image::DynamicImage;
 
 pub fn load_texture(bytes: &[u8]) -> Option<Texture> {
     let img: DynamicImage = ImageReader::new(Cursor::new(bytes))
