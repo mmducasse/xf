@@ -4,7 +4,7 @@ use macroquad::{
     texture::{draw_texture_ex, DrawTextureParams, Texture2D},
 };
 
-use crate::num::irect::IRect;
+use crate::num::{irect::IRect, ivec2::IVec2};
 
 pub fn draw_rect(rect: IRect, color: Color) {
     draw_rectangle(
@@ -16,15 +16,15 @@ pub fn draw_rect(rect: IRect, color: Color) {
     );
 }
 
-pub fn draw_texture(texture: Texture2D, src: IRect) {
+pub fn draw_texture(texture: Texture2D, src: Option<IRect>, dst: IVec2) {
     draw_texture_ex(
         texture,
-        src.x() as f32,
-        src.y() as f32,
+        dst.x as f32,
+        dst.y as f32,
         WHITE,
         DrawTextureParams {
             dest_size: None,
-            source: Some(src.as_rect()),
+            source: src.map(|s| s.as_rect()),
             rotation: 0.0,
             flip_x: false,
             flip_y: false,
