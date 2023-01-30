@@ -1,3 +1,5 @@
+use macroquad::prelude::Rect;
+
 use super::{
     ivec2::{i2, IVec2},
     range::Range,
@@ -105,6 +107,16 @@ impl IRect {
     #[inline]
     pub fn y_range(&self) -> Range<i32> {
         Range::new(self.top(), self.bottom())
+    }
+
+    /// Converts to macroquad Rect.
+    pub fn as_rect(&self) -> Rect {
+        Rect {
+            x: self.x() as f32,
+            y: self.y() as f32,
+            w: self.w() as f32,
+            h: self.h() as f32,
+        }
     }
 
     /// Does the rectangle contain the point `pt`?
