@@ -40,7 +40,7 @@ where
     }
 }
 
-pub fn row<T>(key: T, org: IVec2, len: usize, frame_dur_s: f32, loops: u8) -> AnimationMap<T>
+pub fn row<T>(key: T, org: IVec2, len: usize, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
 where
     T: Eq + Hash,
 {
@@ -49,7 +49,7 @@ where
     let anim = Animation {
         tiles,
         frame_dur_s,
-        loops: loops != 0,
+        loops,
     };
 
     AnimationMap {
@@ -62,7 +62,7 @@ pub fn row_h<T>(
     org: IVec2,
     len: usize,
     frame_dur_s: f32,
-    loops: u8,
+    loops: bool,
 ) -> AnimationMap<T>
 where
     T: Eq + Hash,
@@ -97,7 +97,7 @@ pub fn test() -> AnimationMap<TestEnum> {
     const DUR: f32 = 0.25;
 
     AnimationMap::new(vec![
-        row(Idle, i2(0, 0), 1, DUR, 1),
-        row_h(|d| Run(d), i2(0, 0), 1, DUR, 1),
+        row(Idle, i2(0, 0), 1, DUR, true),
+        row_h(|d| Run(d), i2(0, 0), 1, DUR, true),
     ])
 }
