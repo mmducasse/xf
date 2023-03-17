@@ -20,4 +20,8 @@ impl Animation {
 
         self.tiles[idx]
     }
+
+    pub fn total_dur_s(&self) -> f32 {
+        self.tiles.len() as f32 * self.frame_dur_s
+    }
 }

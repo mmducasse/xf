@@ -32,10 +32,24 @@ where
         }
     }
 
-    pub fn update(&mut self, delta_s: f32, new_key: Option<T>) {
-        if let Some(new_key) = new_key {
-            self.curr_key = new_key;
-        }
+    pub fn curr_key(&self) -> T {
+        self.curr_key.clone()
+    }
+
+    pub fn is_done(&self) -> bool {
+        let Some(curr_animation) = self.animations.get(self.curr_key.clone()) else {
+            return false;
+        };
+
+        !curr_animation.loops && (curr_animation.total_dur_s() < self.curr_time_s)
+    }
+
+    pub fn set_key(&mut self, key: T) {
+        self.curr_key = key;
+        self.curr_time_s = 0.0;
+    }
+
+    pub fn update(&mut self, delta_s: f32) {
         self.curr_time_s += delta_s;
     }
 
