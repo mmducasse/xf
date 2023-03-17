@@ -29,7 +29,7 @@ impl IRect {
     pub const ZERO: Self = rect(0, 0, 0, 0);
 
     /// Creates a rectangle at `(0, 0)` with the given size.
-    pub fn of_size(size: IVec2) -> Self {
+    pub const fn of_size(size: IVec2) -> Self {
         Self {
             pos: IVec2::ZERO,
             size,

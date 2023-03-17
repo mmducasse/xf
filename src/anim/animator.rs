@@ -36,6 +36,10 @@ where
         self.curr_key.clone()
     }
 
+    pub fn curr_time_s(&self) -> f32 {
+        self.curr_time_s
+    }
+
     pub fn is_done(&self) -> bool {
         let Some(curr_animation) = self.animations.get(self.curr_key.clone()) else {
             return false;
