@@ -1,4 +1,3 @@
-use std::rc::Rc;
 
 use crate::{
     data::arr2d::Arr2D,
@@ -12,7 +11,7 @@ use super::{
 
 pub struct Tilemap<Tile> {
     pub tile_srcs: Arr2D<Option<IVec2>>,
-    pub tileset: Rc<Tileset<Tile>>,
+    pub tileset: Tileset<Tile>,
 }
 
 impl<Tile> Tilemap<Tile>
@@ -41,9 +40,11 @@ where
     }
 }
 
-impl<Tile> Tilemap<Tile> {
+impl<Tile> Tilemap<Tile>
+where Tile: Clone
+{
     /// Converts the Tilelayers of a `JsonTileset` object into a Vec of `Tilemap`.
-    pub fn from_json(json: &JsonTilemap, tileset: Rc<Tileset<Tile>>) -> Result<Vec<Self>, String> {
+    pub fn from_json(json: &JsonTilemap, tileset: Tileset<Tile>) -> Result<Vec<Self>, String> {
         let size = i2(json.width, json.height);
         let mut tilemaps = vec![];
 

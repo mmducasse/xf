@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use macroquad::texture::Texture2D;
 
 use crate::data::arr2d::Arr2D;
@@ -5,7 +7,7 @@ use crate::data::arr2d::Arr2D;
 use super::tiled_json::tileset::{JsonTile, JsonTileset};
 
 pub struct Tileset<Tile> {
-    pub tiles: Arr2D<Tile>,
+    pub tiles: Rc<Arr2D<Tile>>,
     pub texture: Texture2D,
 }
 
@@ -47,6 +49,9 @@ where
             tiles.set_i(idx, tile);
         }
 
-        Ok(Tileset { tiles, texture })
+        Ok(Tileset { 
+            tiles: Rc::new(tiles), 
+            texture 
+        })
     }
 }

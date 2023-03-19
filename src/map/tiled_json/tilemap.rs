@@ -30,6 +30,7 @@ pub enum Layer {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Tileset {
+    pub firstgid: usize,
     pub source: String,
 }
 
