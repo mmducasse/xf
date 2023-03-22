@@ -27,6 +27,15 @@ pub enum Layer {
     },
 }
 
+impl Layer {
+    pub fn name(&self) -> &str {
+        match self {
+            Layer::Tilelayer { data: _, height: _, width: _, id: _, name } => &name,
+            Layer::Objectgroup { objects: _, id: _, name } => &name,
+        }
+    }
+}
+
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Tileset {

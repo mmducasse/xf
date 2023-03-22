@@ -10,6 +10,7 @@ use super::{
 };
 
 pub struct Tilemap<Tile> {
+    pub name: String,
     pub tile_srcs: Arr2D<Option<IVec2>>,
     pub tileset: Tileset<Tile>,
 }
@@ -34,6 +35,7 @@ where
 {
     fn clone(&self) -> Self {
         Self {
+            name: self.name.clone(),
             tile_srcs: self.tile_srcs.clone(),
             tileset: self.tileset.clone(),
         }
@@ -66,6 +68,7 @@ where Tile: Clone
                 let tile_srcs = Arr2D::new(tile_srcs, size.x as usize);
 
                 tilemaps.push(Tilemap {
+                    name: layer.name().to_owned(),
                     tile_srcs,
                     tileset: tileset.clone(),
                 });
