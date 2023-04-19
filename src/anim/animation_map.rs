@@ -67,21 +67,37 @@ pub fn row_h<T>(
 where
     T: Eq + Hash,
 {
+    let row = |key, y_offset| {
+        let org = org + i2(0, y_offset);
+        row(key, org, len, frame_dur_s, loops)
+    };
+
     AnimationMap::new(vec![
-        row(
-            key_selector(DirH::L),
-            org + i2(0, 0),
-            len,
-            frame_dur_s,
-            loops,
-        ),
-        row(
-            key_selector(DirH::R),
-            org + i2(0, 1),
-            len,
-            frame_dur_s,
-            loops,
-        ),
+        row(key_selector(DirH::L), 0),
+        row(key_selector(DirH::R), 1),
+    ])
+}
+
+pub fn row_4<T>(
+    key_selector: fn(Dir4) -> T,
+    org: IVec2,
+    len: usize,
+    frame_dur_s: f32,
+    loops: bool,
+) -> AnimationMap<T>
+where
+    T: Eq + Hash,
+{
+    let row = |key, y_offset| {
+        let org = org + i2(0, y_offset);
+        row(key, org, len, frame_dur_s, loops)
+    };
+
+    AnimationMap::new(vec![
+        row(key_selector(Dir4::N), 0),
+        row(key_selector(Dir4::E), 1),
+        row(key_selector(Dir4::S), 2),
+        row(key_selector(Dir4::W), 3),
     ])
 }
 
