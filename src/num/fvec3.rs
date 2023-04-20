@@ -20,18 +20,16 @@ impl FVec3 {
         }
     }
 
-    // pub fn magnitude(&self) -> f32 {
-    //     let x = self.x;
-    //     let y = self.y;
-    //     let z = self.z;
+    pub fn magnitude(&self) -> f32 {
+        let x = self.x;
+        let y = self.y;
+        let z = self.z;
 
-    //     f32::sqrt(x * x + y * y);
+        f32::sqrt(x * x + y * y + z * z)
+    }
 
-    //     todo!()
-    // }
-
-    // pub fn normalize(&self) -> FVec3 {
-    //     let mag = self.magnitude();
-    //     f3(self.x / mag, self.y / mag, self.z / mag)
-    // }
+    pub fn normalize(&self) -> FVec3 {
+        let mag = self.magnitude();
+        f3(self.x / mag, self.y / mag, self.z / mag)
+    }
 }
