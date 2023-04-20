@@ -49,9 +49,9 @@ where
             tiles.set_i(idx, tile);
         }
 
-        Ok(Tileset { 
-            tiles: Rc::new(tiles), 
-            texture 
+        Ok(Tileset {
+            tiles: Rc::new(tiles),
+            texture,
         })
     }
 }

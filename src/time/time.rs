@@ -1,4 +1,7 @@
-use std::{time::{Duration, SystemTime}, mem::replace};
+use std::{
+    mem::replace,
+    time::{Duration, SystemTime},
+};
 
 /// A record of the current frame time and duration.
 pub struct Time {

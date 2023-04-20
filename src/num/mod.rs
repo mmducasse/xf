@@ -1,11 +1,13 @@
 pub mod frac;
 pub mod fvec2;
+pub mod fvec3;
 pub mod irect;
 pub mod ivec2;
+pub mod ivec3;
+pub mod lerp;
 pub mod limit;
 pub mod math;
-pub mod vec2;
-
-pub mod lerp;
 pub mod range;
 mod test;
+pub mod vec2;
+pub mod vec3;

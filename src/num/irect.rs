@@ -171,6 +171,23 @@ impl IRect {
         }
     }
 
+    /// Creates a rect centered around `pt` with a given size.
+    pub const fn around(pt: IVec2, size: IVec2) -> Self {
+        let x = pt.x - (size.x / 2);
+        let y = pt.y - (size.y / 2);
+        ir(i2(x, y), size)
+    }
+
+    /// Gets the positions of the rect's 4 corners.
+    pub fn corners(&self) -> [IVec2; 4] {
+        [
+            i2(self.left(), self.top()),
+            i2(self.right(), self.top()),
+            i2(self.left(), self.bottom()),
+            i2(self.right(), self.bottom()),
+        ]
+    }
+
     /// This rectangle with it's position offset by some vector.
     pub fn offset_by(&self, offset: IVec2) -> Self {
         ir(self.pos + offset, self.size)

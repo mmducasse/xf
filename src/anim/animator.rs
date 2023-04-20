@@ -2,10 +2,13 @@ use std::{hash::Hash, rc::Rc};
 
 use macroquad::texture::Texture2D;
 
-use crate::{num::{
-    irect::{ir, IRect},
-    ivec2::IVec2,
-}, mq::draw::draw_texture};
+use crate::{
+    mq::draw::draw_texture,
+    num::{
+        irect::{ir, IRect},
+        ivec2::IVec2,
+    },
+};
 
 use super::animation_map::AnimationMap;
 
@@ -22,7 +25,12 @@ impl<T> Animator<T>
 where
     T: Eq + Hash + Clone,
 {
-    pub fn new(start_key: T, tile_size: IVec2, animations: Rc<AnimationMap<T>>, texture: Texture2D) -> Self {
+    pub fn new(
+        start_key: T,
+        tile_size: IVec2,
+        animations: Rc<AnimationMap<T>>,
+        texture: Texture2D,
+    ) -> Self {
         Self {
             curr_key: start_key,
             curr_time_s: 0.0,

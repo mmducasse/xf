@@ -1,4 +1,3 @@
-
 use crate::{
     data::arr2d::Arr2D,
     num::ivec2::{i2, IVec2},
@@ -43,7 +42,8 @@ where
 }
 
 impl<Tile> Tilemap<Tile>
-where Tile: Clone
+where
+    Tile: Clone,
 {
     /// Converts the Tilelayers of a `JsonTileset` object into a Vec of `Tilemap`.
     pub fn from_json(json: &JsonTilemap, tileset: Tileset<Tile>) -> Result<Vec<Self>, String> {

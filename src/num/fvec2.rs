@@ -1,5 +1,6 @@
 use super::{ivec2::IVec2, vec2::Vec2};
 
+/// 2D vector of `f32` values.
 pub type FVec2 = Vec2<f32>;
 
 /// Creates a `Vec2<f32>` from x and y position.
