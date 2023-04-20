@@ -19,6 +19,13 @@ impl IVec2 {
         }
     }
 
+    pub fn abs(self) -> Self {
+        Self {
+            x: self.x.abs(),
+            y: self.y.abs(),
+        }
+    }
+
     pub const fn add(a: IVec2, b: IVec2) -> IVec2 {
         IVec2 {
             x: a.x + b.x,

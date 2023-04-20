@@ -20,6 +20,14 @@ impl IVec3 {
         }
     }
 
+    pub fn abs(self) -> Self {
+        Self {
+            x: self.x.abs(),
+            y: self.y.abs(),
+            z: self.z.abs(),
+        }
+    }
+
     pub const fn add(a: IVec3, b: IVec3) -> IVec3 {
         IVec3 {
             x: a.x + b.x,

@@ -19,6 +19,13 @@ impl FVec2 {
         }
     }
 
+    pub fn abs(self) -> Self {
+        Self {
+            x: self.x.abs(),
+            y: self.y.abs(),
+        }
+    }
+
     pub fn magnitude(&self) -> f32 {
         let x = self.x;
         let y = self.y;
