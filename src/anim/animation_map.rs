@@ -40,6 +40,21 @@ where
     }
 }
 
+pub fn seq<T>(key: T, tiles: Vec<IVec2>, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
+where
+    T: Eq + Hash,
+{
+    let anim = Animation {
+        tiles,
+        frame_dur_s,
+        loops,
+    };
+
+    AnimationMap {
+        anims: HashMap::from([(key, anim)]),
+    }
+}
+
 pub fn row<T>(key: T, org: IVec2, len: usize, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
 where
     T: Eq + Hash,

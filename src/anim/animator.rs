@@ -65,7 +65,7 @@ where
         self.curr_time_s += delta_s;
     }
 
-    fn curr_src_tile(&self) -> IRect {
+    pub fn curr_src_tile(&self) -> IRect {
         let Some(curr_animation) =
             self.animations
                 .get(self.curr_key.clone()) else {
