@@ -10,12 +10,13 @@ use crate::{
     },
 };
 
-use super::animation_map::AnimationMap;
+use super::{animation_map::AnimationMap, animation::Animation};
 
 /// State of an animated sprite.
 pub struct Animator<T> {
     curr_key: T,
     curr_time_s: f32,
+    default_key: T,
     tile_size: IVec2,
     animations: Rc<AnimationMap<T>>,
     texture: Texture2D,
@@ -32,8 +33,9 @@ where
         texture: Texture2D,
     ) -> Self {
         Self {
-            curr_key: start_key,
+            curr_key: start_key.clone(),
             curr_time_s: 0.0,
+            default_key: start_key,
             tile_size,
             animations,
             texture,
@@ -46,6 +48,17 @@ where
 
     pub fn curr_time_s(&self) -> f32 {
         self.curr_time_s
+    }
+
+    pub fn curr_animation(&self) -> &Animation {
+        let curr_key = self.curr_key();
+
+        if let Some(curr_animation) = self.animations.get(curr_key) {
+            curr_animation
+        } else {
+            let default_animation = self.animations.get(self.default_key.clone()).unwrap();
+            default_animation
+        }
     }
 
     pub fn is_done(&self) -> bool {

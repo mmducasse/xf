@@ -10,15 +10,19 @@ pub struct Animation {
 impl Animation {
     /// The tile to draw at the given time (in seconds).
     pub fn at(&self, time_s: f32) -> IVec2 {
+        let idx = self.idx(time_s);
+        self.tiles[idx]
+    }
+
+    pub fn idx(&self, time_s: f32) -> usize {
         let len = self.tiles.len();
         let idx = (time_s / self.frame_dur_s) as usize;
-        let idx = if self.loops {
+        
+        if self.loops {
             idx % len
         } else {
             idx.min(len - 1)
-        };
-
-        self.tiles[idx]
+        }
     }
 
     pub fn total_dur_s(&self) -> f32 {
