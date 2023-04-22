@@ -42,6 +42,10 @@ where
         }
     }
 
+    pub fn texture(&self) -> Texture2D {
+        self.texture
+    }
+
     pub fn curr_key(&self) -> T {
         self.curr_key.clone()
     }
