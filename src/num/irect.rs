@@ -93,8 +93,11 @@ impl IRect {
 
     /// The rectangle's center point.
     #[inline]
-    pub fn center(&self) -> IVec2 {
-        self.pos + (self.size / 2)
+    pub const fn center(&self) -> IVec2 {
+        i2(
+            self.pos.x + (self.size.x / 2),
+            self.pos.y + (self.size.y / 2),
+        )
     }
 
     /// The range from left to right edge.
