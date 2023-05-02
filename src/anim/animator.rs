@@ -10,7 +10,7 @@ use crate::{
     },
 };
 
-use super::{animation_map::AnimationMap, animation::Animation};
+use super::{animation::Animation, animation_map::AnimationMap};
 
 /// State of an animated sprite.
 pub struct Animator<T> {

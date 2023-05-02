@@ -17,7 +17,7 @@ impl Animation {
     pub fn idx(&self, time_s: f32) -> usize {
         let len = self.tiles.len();
         let idx = (time_s / self.frame_dur_s) as usize;
-        
+
         if self.loops {
             idx % len
         } else {
