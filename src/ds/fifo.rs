@@ -24,8 +24,8 @@ pub struct FifoTx<T> {
 }
 
 impl<T> FifoTx<T> {
-    pub fn dequeue(&mut self) -> Option<T> {
-        self.queue.borrow_mut().dequeue()
+    pub fn enqueue(&mut self, value: T) {
+        self.queue.borrow_mut().enqueue(value);
     }
 }
 
@@ -34,7 +34,7 @@ pub struct FifoRx<T> {
 }
 
 impl<T> FifoRx<T> {
-    pub fn enqueue(&mut self, value: T) {
-        self.queue.borrow_mut().enqueue(value);
+    pub fn dequeue(&mut self) -> Option<T> {
+        self.queue.borrow_mut().dequeue()
     }
 }
