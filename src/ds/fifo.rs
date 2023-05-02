@@ -2,20 +2,32 @@ use std::{rc::Rc, cell::RefCell};
 
 use super::queue::Queue;
 
+pub struct Fifo<T> {
+    tx: FifoTx<T>,
+    rx: FifoRx<T>,
+}
 
-pub fn fifo<T>() -> (FifoTx<T>, FifoRx<T>) {
-    let queue = Queue::new();
-    let queue = Rc::new(RefCell::new(queue));
+impl<T> Fifo<T> {
+    pub fn new() -> Self {
+        let queue = Rc::new(RefCell::new(Queue::new()));
 
-    let tx = FifoTx {
-        queue: queue.clone(),
-    };
+        Self {
+            tx: FifoTx { queue: queue.clone() },
+            rx: FifoRx { queue },
+        }
+    }
 
-    let rx = FifoRx {
-        queue,
-    };
+    pub fn tx_mut(&mut self) -> &mut FifoTx<T> {
+        &mut self.tx
+    }
 
-    (tx, rx)
+    pub fn rx_mut(&mut self) -> &mut FifoRx<T> {
+        &mut self.rx
+    }
+
+    pub fn split(self) -> (FifoTx<T>, FifoRx<T>) {
+        (self.tx, self.rx)
+    }
 }
 
 #[derive(Clone)]
