@@ -6,7 +6,7 @@ pub enum Dir4 {
     W,
 }
 
-use std::fmt::{self, Display};
+use std::{fmt::{self, Display}, str::FromStr};
 
 use Dir4::*;
 
@@ -96,5 +96,21 @@ impl Display for Dir4 {
         };
 
         write!(f, "{}", str)
+    }
+}
+
+impl FromStr for Dir4 {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        use Dir4::*;
+
+        match s.to_lowercase().as_str() {
+            "n" => Ok(N),
+            "e" => Ok(E),
+            "s" => Ok(S),
+            "w" => Ok(W),
+            _ => Err(())
+        }
     }
 }
