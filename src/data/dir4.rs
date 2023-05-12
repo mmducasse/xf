@@ -12,7 +12,7 @@ use Dir4::*;
 
 use crate::num::{
     ivec2::{i2, IVec2},
-    math::mod_,
+    math::mod_, fvec2::FVec2,
 };
 
 use super::spin::Spin;
@@ -68,6 +68,18 @@ impl Dir4 {
             Some(if ivec2.y < 0 { N } else { S })
         } else {
             Some(if ivec2.x < 0 { W } else { E })
+        }
+    }
+
+    pub fn from_fvec2(fvec2: FVec2) -> Option<Dir4> {
+        use Dir4::*;
+
+        if fvec2 == FVec2::splat(0.0) {
+            None
+        } else if fvec2.y.abs() >= fvec2.x.abs() {
+            Some(if fvec2.y < 0.0 { N } else { S })
+        } else {
+            Some(if fvec2.x < 0.0 { W } else { E })
         }
     }
 }
