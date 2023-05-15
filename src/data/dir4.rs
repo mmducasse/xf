@@ -6,13 +6,17 @@ pub enum Dir4 {
     W,
 }
 
-use std::{fmt::{self, Display}, str::FromStr};
+use std::{
+    fmt::{self, Display},
+    str::FromStr,
+};
 
 use Dir4::*;
 
 use crate::num::{
+    fvec2::FVec2,
     ivec2::{i2, IVec2},
-    math::mod_, fvec2::FVec2,
+    math::mod_,
 };
 
 use super::spin::Spin;
@@ -122,7 +126,7 @@ impl FromStr for Dir4 {
             "e" => Ok(E),
             "s" => Ok(S),
             "w" => Ok(W),
-            _ => Err(())
+            _ => Err(()),
         }
     }
 }

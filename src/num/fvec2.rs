@@ -1,4 +1,4 @@
-use super::{ivec2::IVec2, vec2::Vec2};
+use super::{fvec3::FVec3, ivec2::IVec2, ivec3::IVec3, vec2::Vec2};
 
 /// 2D vector of `f32` values.
 pub type FVec2 = Vec2<f32>;
@@ -12,11 +12,23 @@ pub const fn f2(x: f32, y: f32) -> FVec2 {
 impl FVec2 {
     pub const ZERO: FVec2 = FVec2::splat(0.0);
 
+    pub fn as_fvec3(self) -> FVec3 {
+        FVec3 {
+            x: self.x,
+            y: self.y,
+            z: 0.0,
+        }
+    }
+
     pub fn as_ivec2(&self) -> IVec2 {
         IVec2 {
             x: self.x as i32,
             y: self.y as i32,
         }
+    }
+
+    pub fn as_ivec3(self) -> IVec3 {
+        self.as_fvec3().as_ivec3()
     }
 
     pub fn abs(self) -> Self {

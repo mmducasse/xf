@@ -1,4 +1,4 @@
-use std::{rc::Rc, cell::RefCell};
+use std::{cell::RefCell, rc::Rc};
 
 use super::queue::Queue;
 
@@ -12,7 +12,9 @@ impl<T> Fifo<T> {
         let queue = Rc::new(RefCell::new(Queue::new()));
 
         Self {
-            tx: FifoTx { queue: queue.clone() },
+            tx: FifoTx {
+                queue: queue.clone(),
+            },
             rx: FifoRx { queue },
         }
     }

@@ -1,4 +1,4 @@
-use super::{ivec3::IVec3, vec3::Vec3};
+use super::{fvec2::FVec2, ivec3::IVec3, vec3::Vec3};
 
 /// 3D vector of `f32` values.
 pub type FVec3 = Vec3<f32>;
@@ -11,6 +11,13 @@ pub const fn f3(x: f32, y: f32, z: f32) -> FVec3 {
 
 impl FVec3 {
     pub const ZERO: FVec3 = FVec3::splat(0.0);
+
+    pub fn xy(self) -> FVec2 {
+        FVec2 {
+            x: self.x,
+            y: self.y,
+        }
+    }
 
     pub fn as_ivec3(&self) -> IVec3 {
         IVec3 {
