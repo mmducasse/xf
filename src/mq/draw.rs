@@ -16,9 +16,9 @@ pub fn draw_rect(rect: IRect, color: Color) {
     );
 }
 
-pub fn draw_texture(texture: Texture2D, src: Option<IRect>, dst: IVec2) {
+pub fn draw_texture(texture: &Texture2D, src: Option<IRect>, dst: IVec2) {
     draw_texture_ex(
-        texture,
+        &texture,
         dst.x as f32,
         dst.y as f32,
         WHITE,

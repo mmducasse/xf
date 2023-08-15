@@ -43,7 +43,7 @@ where
     }
 
     pub fn texture(&self) -> Texture2D {
-        self.texture
+        self.texture.clone()
     }
 
     pub fn curr_key(&self) -> T {
@@ -95,6 +95,6 @@ where
 
     pub fn draw(&self, pos: IVec2) {
         let src = self.curr_src_tile();
-        draw_texture(self.texture, Some(src), pos)
+        draw_texture(&self.texture, Some(src), pos)
     }
 }
