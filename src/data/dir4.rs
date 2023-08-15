@@ -8,7 +8,7 @@ pub enum Dir4 {
 
 use std::{
     fmt::{self, Display},
-    str::FromStr,
+    str::FromStr, ops::Add,
 };
 
 use Dir4::*;
@@ -128,5 +128,13 @@ impl FromStr for Dir4 {
             "w" => Ok(W),
             _ => Err(()),
         }
+    }
+}
+
+impl Add for Dir4 {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self::from(self as i32 + rhs as i32)
     }
 }
