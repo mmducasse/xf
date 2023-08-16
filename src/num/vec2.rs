@@ -27,6 +27,13 @@ where
             z,
         }
     }
+
+    pub fn flip(self) -> Vec2<T> {
+        Self {
+            x: self.y,
+            y: self.x,
+        }
+    }
 }
 
 impl<T> Vec2<T>
