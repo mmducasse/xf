@@ -1,3 +1,6 @@
+
+use std::slice::IterMut;
+
 use crate::num::{
     irect::IRect,
     ivec2::{i2, IVec2},
@@ -114,6 +117,10 @@ impl<T> Arr2D<T> {
             arr2d: self,
             curr_pos: i2(0, 0),
         }
+    }
+
+    pub fn iter_mut(&mut self) -> IterMut<'_, T> {
+        self.data.iter_mut()
     }
 }
 
