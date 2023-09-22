@@ -35,6 +35,16 @@ where
     }
 }
 
+
+impl<T> Limit<T>
+where
+    T:Ord + Copy,
+{
+    pub fn set(&mut self, value: T) {
+        self.value = value.min(self.max).max(self.min);
+    }
+}
+
 impl<T> Display for Limit<T>
 where
     T: Display,
