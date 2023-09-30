@@ -1,9 +1,7 @@
 use std::{hash::Hash, rc::Rc};
 
-use macroquad::texture::Texture2D;
-
 use crate::{
-    mq::draw::draw_texture,
+    mq::{draw::draw_texture, texture::Texture},
     num::{
         irect::{ir, IRect},
         ivec2::IVec2,
@@ -19,7 +17,7 @@ pub struct Animator<T> {
     default_key: T,
     tile_size: IVec2,
     animations: Rc<AnimationMap<T>>,
-    texture: Texture2D,
+    texture: Texture,
 }
 
 impl<T> Animator<T>
@@ -30,7 +28,7 @@ where
         start_key: T,
         tile_size: IVec2,
         animations: Rc<AnimationMap<T>>,
-        texture: Texture2D,
+        texture: Texture,
     ) -> Self {
         Self {
             curr_key: start_key.clone(),
@@ -42,7 +40,7 @@ where
         }
     }
 
-    pub fn texture(&self) -> Texture2D {
+    pub fn texture(&self) -> Texture {
         self.texture.clone()
     }
 
@@ -95,6 +93,6 @@ where
 
     pub fn draw(&self, pos: IVec2) {
         let src = self.curr_src_tile();
-        draw_texture(&self.texture, Some(src), pos)
+        draw_texture(self.texture.clone(), Some(src), pos)
     }
 }

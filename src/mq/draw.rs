@@ -1,10 +1,12 @@
 use macroquad::{
     prelude::{Color, WHITE},
     shapes::draw_rectangle,
-    texture::{draw_texture_ex, DrawTextureParams, Texture2D},
+    texture::{draw_texture_ex, DrawTextureParams},
 };
 
 use crate::num::{irect::IRect, ivec2::IVec2};
+
+use super::texture::Texture;
 
 pub fn draw_rect(rect: IRect, color: Color) {
     draw_rectangle(
@@ -16,9 +18,9 @@ pub fn draw_rect(rect: IRect, color: Color) {
     );
 }
 
-pub fn draw_texture(texture: &Texture2D, src: Option<IRect>, dst: IVec2) {
+pub fn draw_texture(texture: Texture, src: Option<IRect>, dst: IVec2) {
     draw_texture_ex(
-        &texture,
+        texture.inner(),
         dst.x as f32,
         dst.y as f32,
         WHITE,

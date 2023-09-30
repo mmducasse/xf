@@ -8,7 +8,8 @@ pub enum Dir4 {
 
 use std::{
     fmt::{self, Display},
-    str::FromStr, ops::Add,
+    ops::Add,
+    str::FromStr,
 };
 
 use Dir4::*;
