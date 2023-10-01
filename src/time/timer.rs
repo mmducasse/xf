@@ -1,5 +1,5 @@
 /// A timer that completes after a given duration elapses.
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, PartialEq)]
 pub struct Timer {
     duration_s: f32,
     elapsed_s: f32,
