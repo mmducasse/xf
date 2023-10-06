@@ -1,14 +1,12 @@
 use std::rc::Rc;
 
-use macroquad::texture::Texture2D;
-
-use crate::data::arr2d::Arr2D;
+use crate::{data::arr2d::Arr2D, mq::texture::Texture};
 
 use super::tiled_json::tileset::{JsonTile, JsonTileset};
 
 pub struct Tileset<Tile> {
     pub tiles: Rc<Arr2D<Tile>>,
-    pub texture: Texture2D,
+    pub texture: Texture,
 }
 
 impl<Tile> Clone for Tileset<Tile>
@@ -30,7 +28,7 @@ where
     /// Converts a `JsonTileset` object into a `Tileset`.
     pub fn from_json<F>(
         json: &JsonTileset,
-        texture: Texture2D,
+        texture: Texture,
         tile_fn: F,
     ) -> Result<Tileset<Tile>, String>
     where
