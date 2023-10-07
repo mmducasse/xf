@@ -3,6 +3,8 @@ use crate::num::ivec2::IVec2;
 /// A sequence of tiles to be drawn from a sprite atlas.
 pub struct Animation {
     pub tiles: Vec<IVec2>,
+    pub size_in_tiles: IVec2,
+    pub draw_offset: IVec2,
     pub frame_dur_s: f32,
     pub loops: bool,
 }

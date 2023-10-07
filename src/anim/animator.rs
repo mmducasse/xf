@@ -15,7 +15,7 @@ pub struct Animator<T> {
     curr_key: T,
     curr_time_s: f32,
     default_key: T,
-    tile_size: IVec2,
+tile_size: IVec2,
     animations: Rc<AnimationMap<T>>,
     texture: Texture,
 }
@@ -26,7 +26,7 @@ where
 {
     pub fn new(
         start_key: T,
-        tile_size: IVec2,
+tile_size: IVec2,
         animations: Rc<AnimationMap<T>>,
         texture: Texture,
     ) -> Self {
@@ -34,7 +34,7 @@ where
             curr_key: start_key.clone(),
             curr_time_s: 0.0,
             default_key: start_key,
-            tile_size,
+tile_size,
             animations,
             texture,
         }
@@ -80,6 +80,16 @@ where
         self.curr_time_s += delta_s;
     }
 
+    pub fn curr_draw_offset(&self) -> IVec2 {
+        let Some(curr_animation) =
+            self.animations
+                .get(self.curr_key.clone()) else {
+            return IVec2::ZERO
+        };
+
+        curr_animation.draw_offset * self.tile_size
+    }
+
     pub fn curr_src_tile(&self) -> IRect {
         let Some(curr_animation) =
             self.animations
@@ -87,12 +97,14 @@ where
             return IRect::ZERO
         };
 
+        let size = curr_animation.size_in_tiles * self.tile_size;
         let src_tile = curr_animation.at(self.curr_time_s);
-        ir(src_tile * self.tile_size, self.tile_size)
+        ir(src_tile * self.tile_size, size)
     }
 
     pub fn draw(&self, pos: IVec2) {
         let src = self.curr_src_tile();
-        draw_texture(self.texture.clone(), Some(src), pos)
+        let offset = self.curr_draw_offset();
+        draw_texture(self.texture.clone(), Some(src), pos + offset);
     }
 }

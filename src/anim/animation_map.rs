@@ -40,12 +40,14 @@ where
     }
 }
 
-pub fn seq<T>(key: T, tiles: Vec<IVec2>, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
+pub fn seq<T>(key: T, tiles: Vec<IVec2>, size_in_tiles: IVec2, draw_offset: IVec2, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
 where
     T: Eq + Hash,
 {
     let anim = Animation {
         tiles,
+        size_in_tiles,
+        draw_offset,
         frame_dur_s,
         loops,
     };
@@ -55,14 +57,16 @@ where
     }
 }
 
-pub fn row<T>(key: T, org: IVec2, len: usize, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
+pub fn row<T>(key: T, org: IVec2, len: usize, size_in_tiles: IVec2, draw_offset: IVec2, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
 where
     T: Eq + Hash,
 {
-    let tiles: Vec<IVec2> = (0..len).map(|i| i2(org.x + i as i32, org.y)).collect();
+    let tiles: Vec<IVec2> = (0..len).map(|i| { i2(org.x + (i as i32 * size_in_tiles.x), org.y) }).collect();
 
     let anim = Animation {
         tiles,
+        size_in_tiles,
+        draw_offset,
         frame_dur_s,
         loops,
     };
@@ -76,6 +80,8 @@ pub fn row_h<T>(
     key_selector: fn(DirH) -> T,
     org: IVec2,
     len: usize,
+    size_in_tiles: IVec2,
+    draw_offset: IVec2,
     frame_dur_s: f32,
     loops: bool,
 ) -> AnimationMap<T>
@@ -83,8 +89,8 @@ where
     T: Eq + Hash,
 {
     let row = |key, y_offset| {
-        let org = org + i2(0, y_offset);
-        row(key, org, len, frame_dur_s, loops)
+        let org = org + i2(0, y_offset * size_in_tiles.y);
+        row(key, org, len, size_in_tiles, draw_offset, frame_dur_s, loops)
     };
 
     AnimationMap::new(vec![
@@ -97,6 +103,8 @@ pub fn row_4<T>(
     key_selector: fn(Dir4) -> T,
     org: IVec2,
     len: usize,
+    size_in_tiles: IVec2,
+    draw_offset: IVec2,
     frame_dur_s: f32,
     loops: bool,
 ) -> AnimationMap<T>
@@ -104,8 +112,8 @@ where
     T: Eq + Hash,
 {
     let row = |key, y_offset| {
-        let org = org + i2(0, y_offset);
-        row(key, org, len, frame_dur_s, loops)
+        let org = org + i2(0, y_offset * size_in_tiles.y);
+        row(key, org, len, size_in_tiles, draw_offset, frame_dur_s, loops)
     };
 
     AnimationMap::new(vec![
@@ -128,7 +136,7 @@ pub fn test() -> AnimationMap<TestEnum> {
     const DUR: f32 = 0.25;
 
     AnimationMap::new(vec![
-        row(Idle, i2(0, 0), 1, DUR, true),
-        row_h(|d| Run(d), i2(0, 0), 1, DUR, true),
+        row(Idle, i2(0, 0), 1, i2(1, 1), IVec2::ZERO, DUR, true),
+        row_h(|d| Run(d), i2(0, 0), 1, i2(1, 1), IVec2::ZERO, DUR, true),
     ])
 }
