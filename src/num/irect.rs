@@ -1,3 +1,5 @@
+use std::ops::Div;
+
 use macroquad::prelude::Rect;
 
 use super::{
@@ -251,5 +253,16 @@ impl<'a> Iterator for IRectIter<'a> {
 
         self.curr = next;
         Some(curr)
+    }
+}
+
+impl Div<IVec2> for IRect {
+    type Output = Self;
+
+    fn div(self, rhs: IVec2) -> Self::Output {
+        Self {
+            pos: self.pos / rhs,
+            size: self.size / rhs,
+        }
     }
 }
