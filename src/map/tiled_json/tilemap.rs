@@ -8,6 +8,8 @@ pub struct Object {
     pub type_: String,
     pub x: i32,
     pub y: i32,
+    pub width: Option<i32>,
+    pub height: Option<i32>,
 }
 
 #[derive(Deserialize, Debug)]
