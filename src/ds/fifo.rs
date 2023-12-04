@@ -19,6 +19,14 @@ impl<T> Fifo<T> {
         }
     }
 
+    pub fn enqueue(&mut self, value: T) {
+        self.tx.enqueue(value);
+    }
+
+    pub fn dequeue(&mut self) -> Option<T> {
+        self.rx.dequeue()
+    }
+
     pub fn tx_mut(&mut self) -> &mut FifoTx<T> {
         &mut self.tx
     }
@@ -29,6 +37,13 @@ impl<T> Fifo<T> {
 
     pub fn split(self) -> (FifoTx<T>, FifoRx<T>) {
         (self.tx, self.rx)
+    }
+}
+
+impl<T> Fifo<T>
+where T: Clone {
+    pub fn tx(&self) -> FifoTx<T> {
+        self.tx.clone()
     }
 }
 
