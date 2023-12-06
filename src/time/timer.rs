@@ -13,6 +13,13 @@ impl Timer {
         }
     }
 
+    pub fn new_done(duration_s: f32) -> Self {
+        Self {
+            duration_s,
+            elapsed_s: duration_s,
+        }
+    }
+
     pub fn reset(&mut self) {
         self.elapsed_s = 0.0;
     }
