@@ -107,4 +107,8 @@ tile_size,
         let offset = self.curr_draw_offset();
         draw_texture(self.texture.clone(), Some(src), pos + offset);
     }
+
+    pub fn draw_info(&self) -> (Texture, IRect) {
+        (self.texture.clone(), self.curr_src_tile())
+    }
 }
