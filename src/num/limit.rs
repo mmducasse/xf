@@ -7,7 +7,7 @@ use std::{
 pub struct Limit<T> {
     pub min: T,
     pub max: T,
-    value: T,
+    pub value: T,
 }
 
 impl<T> Limit<T>
