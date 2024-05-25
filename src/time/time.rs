@@ -16,7 +16,7 @@ pub fn frame_num() -> u64 {
 }
 
 // Set the time that has elapsed since the previous frame.
-pub fn update(delta: &Duration) {
+pub fn update_global_time(delta: &Duration) {
     unsafe {
         DELTA_S = delta.as_secs_f32().min(MAX_DELTA_S);
         FRAME_NUM += 1;

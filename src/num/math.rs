@@ -39,3 +39,13 @@ pub const fn mod_(x: i32, d: i32) -> i32 {
 pub const fn mod_p(p: IVec2, d: IVec2) -> IVec2 {
     i2(mod_(p.x, d.x), mod_(p.y, d.y))
 }
+
+pub fn max_f32(nums: &[f32]) -> f32 {
+    let mut max = f32::MIN;
+
+    for num in nums {
+        max = f32::max(max, *num);
+    }
+
+    max
+}

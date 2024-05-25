@@ -1,4 +1,4 @@
-use super::{fvec2::FVec2, ivec3::IVec3, vec3::Vec3};
+use super::{fvec2::FVec2, ivec3::IVec3, math::max_f32, vec3::Vec3};
 
 /// 3D vector of `f32` values.
 pub type FVec3 = Vec3<f32>;
@@ -33,6 +33,10 @@ impl FVec3 {
             y: self.y.abs(),
             z: self.z.abs(),
         }
+    }
+
+    pub fn max(self) -> f32 {
+        max_f32(&[self.x, self.y, self.z])
     }
 
     pub fn magnitude(&self) -> f32 {
