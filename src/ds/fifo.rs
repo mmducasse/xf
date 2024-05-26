@@ -41,7 +41,9 @@ impl<T> Fifo<T> {
 }
 
 impl<T> Fifo<T>
-where T: Clone {
+where
+    T: Clone,
+{
     pub fn tx(&self) -> FifoTx<T> {
         self.tx.clone()
     }

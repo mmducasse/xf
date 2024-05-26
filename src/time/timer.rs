@@ -1,3 +1,5 @@
+use super::time::delta_s;
+
 /// A timer that completes after a given duration elapses.
 #[derive(Clone, PartialEq)]
 pub struct Timer {
@@ -24,8 +26,8 @@ impl Timer {
         self.elapsed_s = 0.0;
     }
 
-    pub fn update(&mut self, delta_s: f32) {
-        self.elapsed_s += delta_s;
+    pub fn update(&mut self) {
+        self.elapsed_s += delta_s();
     }
 
     pub fn duration(&self) -> f32 {

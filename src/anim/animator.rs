@@ -6,6 +6,7 @@ use crate::{
         irect::{ir, IRect},
         ivec2::IVec2,
     },
+    time::time::delta_s,
 };
 
 use super::{animation::Animation, animation_map::AnimationMap};
@@ -15,7 +16,7 @@ pub struct Animator<T> {
     curr_key: T,
     curr_time_s: f32,
     default_key: T,
-tile_size: IVec2,
+    tile_size: IVec2,
     animations: Rc<AnimationMap<T>>,
     texture: Texture,
 }
@@ -26,7 +27,7 @@ where
 {
     pub fn new(
         start_key: T,
-tile_size: IVec2,
+        tile_size: IVec2,
         animations: Rc<AnimationMap<T>>,
         texture: Texture,
     ) -> Self {
@@ -34,7 +35,7 @@ tile_size: IVec2,
             curr_key: start_key.clone(),
             curr_time_s: 0.0,
             default_key: start_key,
-tile_size,
+            tile_size,
             animations,
             texture,
         }
@@ -76,25 +77,21 @@ tile_size,
         self.curr_time_s = 0.0;
     }
 
-    pub fn update(&mut self, delta_s: f32) {
-        self.curr_time_s += delta_s;
+    pub fn update(&mut self) {
+        self.curr_time_s += delta_s();
     }
 
     pub fn curr_draw_offset(&self) -> IVec2 {
-        let Some(curr_animation) =
-            self.animations
-                .get(self.curr_key.clone()) else {
-            return IVec2::ZERO
+        let Some(curr_animation) = self.animations.get(self.curr_key.clone()) else {
+            return IVec2::ZERO;
         };
 
         curr_animation.draw_offset * self.tile_size
     }
 
     pub fn curr_src_tile(&self) -> IRect {
-        let Some(curr_animation) =
-            self.animations
-                .get(self.curr_key.clone()) else {
-            return IRect::ZERO
+        let Some(curr_animation) = self.animations.get(self.curr_key.clone()) else {
+            return IRect::ZERO;
         };
 
         let size = curr_animation.size_in_tiles * self.tile_size;

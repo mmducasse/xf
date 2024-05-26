@@ -40,7 +40,14 @@ where
     }
 }
 
-pub fn seq<T>(key: T, tiles: Vec<IVec2>, size_in_tiles: IVec2, draw_offset: IVec2, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
+pub fn seq<T>(
+    key: T,
+    tiles: Vec<IVec2>,
+    size_in_tiles: IVec2,
+    draw_offset: IVec2,
+    frame_dur_s: f32,
+    loops: bool,
+) -> AnimationMap<T>
 where
     T: Eq + Hash,
 {
@@ -57,11 +64,21 @@ where
     }
 }
 
-pub fn row<T>(key: T, org: IVec2, len: usize, size_in_tiles: IVec2, draw_offset: IVec2, frame_dur_s: f32, loops: bool) -> AnimationMap<T>
+pub fn row<T>(
+    key: T,
+    org: IVec2,
+    len: usize,
+    size_in_tiles: IVec2,
+    draw_offset: IVec2,
+    frame_dur_s: f32,
+    loops: bool,
+) -> AnimationMap<T>
 where
     T: Eq + Hash,
 {
-    let tiles: Vec<IVec2> = (0..len).map(|i| { i2(org.x + (i as i32 * size_in_tiles.x), org.y) }).collect();
+    let tiles: Vec<IVec2> = (0..len)
+        .map(|i| i2(org.x + (i as i32 * size_in_tiles.x), org.y))
+        .collect();
 
     let anim = Animation {
         tiles,
@@ -90,7 +107,15 @@ where
 {
     let row = |key, y_offset| {
         let org = org + i2(0, y_offset * size_in_tiles.y);
-        row(key, org, len, size_in_tiles, draw_offset, frame_dur_s, loops)
+        row(
+            key,
+            org,
+            len,
+            size_in_tiles,
+            draw_offset,
+            frame_dur_s,
+            loops,
+        )
     };
 
     AnimationMap::new(vec![
@@ -113,7 +138,15 @@ where
 {
     let row = |key, y_offset| {
         let org = org + i2(0, y_offset * size_in_tiles.y);
-        row(key, org, len, size_in_tiles, draw_offset, frame_dur_s, loops)
+        row(
+            key,
+            org,
+            len,
+            size_in_tiles,
+            draw_offset,
+            frame_dur_s,
+            loops,
+        )
     };
 
     AnimationMap::new(vec![

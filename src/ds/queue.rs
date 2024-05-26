@@ -17,10 +17,7 @@ impl<T> Queue<T> {
 
     /// Creates a `Queue` from the contents of `in_`.
     pub fn from_vec(in_: Vec<T>) -> Self {
-        Self {
-            in_,
-            out_: vec![],
-        }
+        Self { in_, out_: vec![] }
     }
 
     /// Number of items in the queue.
