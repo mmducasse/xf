@@ -34,4 +34,8 @@ where
 
         map.get(&id).unwrap().clone()
     }
+
+    pub fn unload(&mut self) {
+        self.map.as_mut().unwrap().clear();
+    }
 }
