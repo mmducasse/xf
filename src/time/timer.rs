@@ -6,14 +6,14 @@ pub struct Timer {
 }
 
 impl Timer {
-    pub fn new(duration_s: f32) -> Self {
+    pub const fn new(duration_s: f32) -> Self {
         Self {
             duration_s,
             elapsed_s: 0.0,
         }
     }
 
-    pub fn new_done(duration_s: f32) -> Self {
+    pub const fn new_done(duration_s: f32) -> Self {
         Self {
             duration_s,
             elapsed_s: duration_s,
