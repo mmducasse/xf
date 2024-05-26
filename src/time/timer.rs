@@ -30,6 +30,16 @@ impl Timer {
         self.elapsed_s += delta_s();
     }
 
+    pub fn update_and_check(&mut self) -> bool {
+        self.update();
+        if self.is_done() {
+            self.reset();
+            true
+        } else {
+            false
+        }
+    }
+
     pub fn duration(&self) -> f32 {
         self.duration_s
     }
