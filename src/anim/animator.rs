@@ -109,3 +109,11 @@ where
         (self.texture.clone(), self.curr_src_tile())
     }
 }
+
+impl<T> Clone for Animator<T>
+where T: Clone
+{
+    fn clone(&self) -> Self {
+        Self { curr_key: self.curr_key.clone(), curr_time_s: self.curr_time_s.clone(), default_key: self.default_key.clone(), tile_size: self.tile_size.clone(), animations: self.animations.clone(), texture: self.texture.clone() }
+    }
+}
