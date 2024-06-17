@@ -154,6 +154,14 @@ impl IRect {
         Some(rect(left, top, right + 1 - left, bottom + 1 - top))
     }
 
+    /// Does the rectangle completely contain the other rectangle?
+    pub fn contains_rect(&self, other: IRect) -> bool {
+        self.left() <= other.left()
+            && self.right() >= other.right()
+            && self.top() <= other.top()
+            && self.bottom() >= other.bottom()
+    }
+
     /// Gets the union of the two rectangles.
     pub fn union(&self, other: IRect) -> IRect {
         let left = self.left().min(other.left());
