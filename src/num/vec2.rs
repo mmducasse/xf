@@ -1,7 +1,7 @@
 use std::{
     fmt::{Debug, Display},
     hash::Hash,
-    ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign},
+    ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Rem, Sub, SubAssign},
 };
 
 use super::{lerp::Lerp, vec3::Vec3};
@@ -209,6 +209,34 @@ where
         Self {
             x: self.x / rhs,
             y: self.y / rhs,
+        }
+    }
+}
+
+impl<T> Rem<Vec2<T>> for Vec2<T>
+where 
+    T: Copy + Rem<T, Output = T>
+{
+    type Output = Vec2<T>;
+
+    fn rem(self, rhs: Vec2<T>) -> Self::Output {
+        Self {
+            x: self.x % rhs.x,
+            y: self.y % rhs.y,
+        }
+    }
+}
+
+impl<T> Rem<T> for Vec2<T>
+where 
+    T: Copy + Rem<T, Output = T>
+{
+    type Output = Vec2<T>;
+
+    fn rem(self, rhs: T) -> Self::Output {
+        Self {
+            x: self.x % rhs,
+            y: self.y % rhs,
         }
     }
 }
