@@ -25,7 +25,7 @@ use super::spin::Spin;
 impl Dir4 {
     pub const ALL: [Self; 4] = [N, E, S, W];
 
-    pub fn unit(&self) -> IVec2 {
+    pub const fn unit(&self) -> IVec2 {
         match self {
             N => i2(0, -1),
             E => i2(1, 0),
