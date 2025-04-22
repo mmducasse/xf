@@ -1,3 +1,5 @@
+use super::dir4::Dir4;
+
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 pub enum Spin {
     Ccw,
@@ -13,6 +15,13 @@ impl Spin {
         match self {
             Spin::Ccw => Spin::Cw,
             Spin::Cw => Spin::Ccw,
+        }
+    }
+
+    pub fn as_dir_4(self) -> Dir4 {
+        match self {
+            Spin::Ccw => Dir4::W,
+            Spin::Cw => Dir4::E,
         }
     }
 }
