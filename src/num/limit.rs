@@ -48,6 +48,21 @@ where
 }
 
 impl<T> Limit<T>
+where 
+    T: PartialEq
+{
+    #[inline]
+    pub fn is_at_min(&self) -> bool {
+        self.value == self.min
+    }
+
+    #[inline]
+    pub fn is_at_max(&self) -> bool {
+        self.value == self.max
+    }
+}
+
+impl<T> Limit<T>
 where
     T: Ord + Copy,
 {
