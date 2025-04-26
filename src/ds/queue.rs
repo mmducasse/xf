@@ -25,6 +25,12 @@ impl<T> Queue<T> {
         self.in_.len() + self.out_.len()
     }
 
+    /// Iterates over the elements of the queue, 
+    /// from front to back.
+    pub fn iter(&self) -> impl Iterator<Item = &T> {
+        self.out_.iter().rev().chain(self.in_.iter())
+    }
+
     /// Is the queue empty?
     pub fn is_empty(&self) -> bool {
         self.count() == 0
