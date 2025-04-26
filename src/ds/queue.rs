@@ -36,6 +36,12 @@ impl<T> Queue<T> {
         self.count() == 0
     }
 
+    /// Clears the contents of the queue.
+    pub fn clear(&mut self) {
+        self.in_.clear();
+        self.out_.clear();
+    }
+
     /// Adds an item to the end of the queue.
     pub fn enqueue(&mut self, value: T) {
         self.in_.push(value)
