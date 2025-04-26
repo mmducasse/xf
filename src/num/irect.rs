@@ -124,6 +124,14 @@ impl IRect {
         }
     }
 
+    /// Converts to an equivalent rect with non-negative size.
+    pub fn corrected(&self) -> IRect {
+        let pos = IVec2::min(self.pos, self.pos + self.size);
+        let size = self.size.abs();
+
+        return ir(pos, size);
+    }
+
     /// Does the rectangle contain the point `pt`?
     pub fn contains(&self, pt: IVec2) -> bool {
         (self.left() <= pt.x)

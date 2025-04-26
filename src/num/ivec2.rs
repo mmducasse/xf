@@ -38,6 +38,20 @@ impl IVec2 {
         }
     }
 
+    pub fn min(self, b: IVec2) -> IVec2 {
+        Self {
+            x: self.x.min(b.x),
+            y: self.y.min(b.y),
+        }
+    }
+
+    pub fn max(self, b: IVec2) -> IVec2 {
+        Self {
+            x: self.x.max(b.x),
+            y: self.y.max(b.y),
+        }
+    }
+
     pub const fn add(a: IVec2, b: IVec2) -> IVec2 {
         IVec2 {
             x: a.x + b.x,
