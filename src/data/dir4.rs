@@ -79,7 +79,7 @@ impl Dir4 {
     pub fn from_fvec2(fvec2: FVec2) -> Option<Dir4> {
         use Dir4::*;
 
-        if fvec2 == FVec2::splat(0.0) {
+        if fvec2 == FVec2::ZERO {
             None
         } else if fvec2.y.abs() >= fvec2.x.abs() {
             Some(if fvec2.y < 0.0 { N } else { S })
