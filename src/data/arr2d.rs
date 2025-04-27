@@ -130,6 +130,16 @@ impl<T: Clone> Arr2D<T> {
     }
 }
 
+impl<T> Arr2D<Option<T>> {
+    pub fn default_optional(size: IVec2) -> Self {
+        let mut data = vec![];
+        for _ in 0..size.product() {
+            data.push(None);
+        }
+        Self::new(data, size.x as usize)
+    }
+}
+
 impl<T: Copy> Arr2D<T> {
     pub fn copy_area(&self, area: IRect) -> Arr2D<T> {
         if let Some(area) = self.bounds().intersection(area) {
