@@ -40,8 +40,9 @@ impl IRect {
 
     /// Creates a rectangle centered around `center`
     /// with the given size.
-    pub fn centered_at(center: IVec2, size: IVec2) -> Self {
-        let pos = center - (size / 2);
+    pub const fn centered_at(center: IVec2, size: IVec2) -> Self {
+        let half_size = IVec2::div(size, i2(2, 2));
+        let pos = IVec2::sub(center, half_size);
         Self { pos, size }
     }
 
@@ -210,8 +211,8 @@ impl IRect {
     }
 
     /// This rectangle with it's position offset by some vector.
-    pub fn offset_by(&self, offset: IVec2) -> Self {
-        ir(self.pos + offset, self.size)
+    pub const fn offset_by(&self, offset: IVec2) -> Self {
+        ir(IVec2::add(self.pos, offset), self.size)
     }
 
     /// Adjusts this rectangle's positioin to keep it
