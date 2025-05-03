@@ -54,6 +54,14 @@ where
     }
 }
 
+impl<T> Default for Vec2<T>
+where T: Default
+{
+    fn default() -> Self {
+        Self { x: Default::default(), y: Default::default() }
+    }
+}
+
 impl<T> Hash for Vec2<T>
 where
     T: Hash,
