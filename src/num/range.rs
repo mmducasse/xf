@@ -1,6 +1,6 @@
 use std::{
     fmt::{Debug, Display},
-    ops::Sub,
+    ops::{Div, Sub},
 };
 
 use super::lerp::Lerp;
@@ -98,5 +98,18 @@ where
 {
     fn eq(&self, other: &Range<T>) -> bool {
         self.a == other.a && self.b == other.b
+    }
+}
+
+impl<T> Div<T> for Range<T>
+where T: Div<T, Output = T> + Clone
+{
+    type Output = Self;
+
+    fn div(self, rhs: T) -> Self::Output {
+        Self {
+            a: self.a / rhs.clone(),
+            b: self.b / rhs,
+        }
     }
 }
