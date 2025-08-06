@@ -30,9 +30,8 @@ pub fn update_global_time(delta: &Duration) {
     }
 }
 
-// Extimate a fixed time that has elapsed since the previous frame.
-// Useful when running in a context where the current time cannot be measured.
-pub fn fixed_update(secs: f32) {
+// Set the time (in seconds) that has elapsed since the previous frame.
+pub fn update_global_time_seconds(secs: f32) {
     unsafe {
         DELTA_S = secs;
         CURR_TIME_S += DELTA_S;

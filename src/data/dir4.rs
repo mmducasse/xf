@@ -1,5 +1,6 @@
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Default, Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Dir4 {
+    #[default]
     N,
     E,
     S,
