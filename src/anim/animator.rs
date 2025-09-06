@@ -1,7 +1,6 @@
 use std::{hash::Hash, rc::Rc};
 
 use crate::{
-    mq::{draw::draw_texture, texture::Texture},
     num::{
         irect::{ir, IRect},
         ivec2::IVec2,
@@ -18,7 +17,6 @@ pub struct Animator<T> {
     default_key: T,
     tile_size: IVec2,
     animations: Rc<AnimationMap<T>>,
-    texture: Texture,
 }
 
 impl<T> Animator<T>
@@ -29,7 +27,6 @@ where
         start_key: T,
         tile_size: IVec2,
         animations: Rc<AnimationMap<T>>,
-        texture: Texture,
     ) -> Self {
         Self {
             curr_key: start_key.clone(),
@@ -37,12 +34,7 @@ where
             default_key: start_key,
             tile_size,
             animations,
-            texture,
         }
-    }
-
-    pub fn texture(&self) -> Texture {
-        self.texture.clone()
     }
 
     pub fn curr_key(&self) -> T {
@@ -98,22 +90,12 @@ where
         let src_tile = curr_animation.at(self.curr_time_s);
         ir(src_tile * self.tile_size, size)
     }
-
-    pub fn draw(&self, pos: IVec2) {
-        let src = self.curr_src_tile();
-        let offset = self.curr_draw_offset();
-        draw_texture(self.texture.clone(), Some(src), pos + offset);
-    }
-
-    pub fn draw_info(&self) -> (Texture, IRect) {
-        (self.texture.clone(), self.curr_src_tile())
-    }
 }
 
 impl<T> Clone for Animator<T>
 where T: Clone
 {
     fn clone(&self) -> Self {
-        Self { curr_key: self.curr_key.clone(), curr_time_s: self.curr_time_s.clone(), default_key: self.default_key.clone(), tile_size: self.tile_size.clone(), animations: self.animations.clone(), texture: self.texture.clone() }
+        Self { curr_key: self.curr_key.clone(), curr_time_s: self.curr_time_s.clone(), default_key: self.default_key.clone(), tile_size: self.tile_size.clone(), animations: self.animations.clone() }
     }
 }
