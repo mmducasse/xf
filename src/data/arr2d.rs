@@ -11,6 +11,10 @@ pub struct Arr2D<T> {
 }
 
 impl<T> Arr2D<T> {
+    pub fn empty() -> Self {
+        Self { data: vec![], width: 0 }
+    }
+
     pub fn new(data: Vec<T>, width: usize) -> Self {
         assert!(width > 0);
         Self { data, width }
@@ -100,12 +104,18 @@ impl<T> Arr2D<T> {
     }
 
     pub fn to_pos(&self, idx: usize) -> IVec2 {
+        if self.width == 0 {
+            return IVec2::ZERO;
+        }
         let x = (idx % self.width) as i32;
         let y = (idx / self.width) as i32;
         i2(x, y)
     }
 
     pub fn to_idx(&self, pos: IVec2) -> usize {
+        if self.width == 0 {
+            return 0;
+        }
         let x = pos.x as usize;
         let y = pos.y as usize;
         y * self.width + x
